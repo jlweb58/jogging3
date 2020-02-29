@@ -1,0 +1,49 @@
+buildscript {
+    ext {
+        springBootVersion = '2.1.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'application'
+
+
+// Define the main class for the application
+bootRun {
+    main = 'com.webber.jogging.Application'
+}
+
+
+dependencies {
+    implementation  'org.springframework.boot:spring-boot-starter-web:2.1.1.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.1.1.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-data-rest:2.1.1.RELEASE'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    compile 'org.apache.commons:commons-lang3:3.9'
+
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+
+    //Needed for JUnit5
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.1.1'
+    testRuntimeOnly 'com.h2database:h2:1.4.190'
+
+}
+
+repositories {
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+    maven {
+        url 'https://repo.spring.io/libs-snapshot'
+    }
+}
