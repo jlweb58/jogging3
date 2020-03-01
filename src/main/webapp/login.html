@@ -1,0 +1,40 @@
+<html>
+<head>
+  <title>Jogging Login Page</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" type="text/css" href="css/running.css">
+<script src="js/jquery-1.9.1.js"></script>
+<script src="js/hosts.js"></script>
+<script src="js/urls.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function() {
+	$('.error').remove();
+  //Dynamically set the action (url) of the login form
+  var url = JOGGING.loginFormUrl;
+  $('#login-form').attr('action', url);
+	var url = window.location.href;
+	var pieces = url.split("?");
+	var isInArray = $.inArray('error=true', pieces) >= 0;
+	if (isInArray) {
+	   $('#login-form').before('<div class="error">Login failed, please try again.</div>');
+	}
+});
+
+</script>
+
+</head>
+
+<body onload='document.f.j_username.focus();'>
+<h3>Login with Username and Password</h3>
+
+
+<div class="error"></div>
+ <form name='f' method='POST' id='login-form'>  
+ <table>
+    <tr><td>User:</td><td><input type='text' name='username' value=''></td></tr>
+    <tr><td>Password:</td><td><input type='password' name='password'/></td></tr>
+    <tr><td colspan='2'><input name="submit" type="submit" value="Login"/></td></tr>
+  </table>
+</form></body></html>

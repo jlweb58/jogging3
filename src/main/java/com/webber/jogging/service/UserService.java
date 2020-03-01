@@ -1,5 +1,6 @@
 package com.webber.jogging.service;
 
+import com.webber.jogging.controller.UserNotFoundException;
 import com.webber.jogging.domain.User;
 
 public interface UserService {
@@ -27,5 +28,7 @@ public interface UserService {
      * @throws SecurityException if the old password is not correct
      */
     void changePassword(User user, String oldPassword, String newPassword);
+
+    User getCurrentUser() throws UserNotFoundException;
 
 }

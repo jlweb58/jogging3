@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: jogging
+  datasource:
+    driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mysql://localhost/jlweb
+    username: jlweb58
+    password: Wutzi!
+  profiles:
+    active: localhost
+server:
+  port: 9000
