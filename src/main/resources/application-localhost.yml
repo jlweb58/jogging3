@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: jogging
+  datasource:
+    driverClassName: org.mariadb.jdbc.Driver
+  profiles:
+    active: localhost
+server:
+  port: 9000

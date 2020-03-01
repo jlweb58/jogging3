@@ -6,9 +6,7 @@ import com.webber.jogging.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.crypto.password.PasswordEncoder;
+
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,14 +14,11 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
-    private PasswordEncoder passwordEncoder;
-
     private static Logger LOG = LoggerFactory.getLogger(UserServiceImpl.class);
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -37,7 +32,7 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("User with username " + user.getUsername() + " already exists");
         }
         String password = user.getPassword();
-        user.setPassword(passwordEncoder.encode(password));
+        user.setPassword(password);
         return userRepository.save(user);
     }
 
@@ -47,12 +42,8 @@ public class UserServiceImpl implements UserService {
             throw new SecurityException("New password may not be empty");
         }
         user = userRepository.findById((Long) user.getId()).get();
-        String oldPasswordEncoded = passwordEncoder.encode(oldPassword);
-        boolean matches = passwordEncoder.matches(oldPassword, user.getPassword());
-        if (!matches) {
-            throw new SecurityException("Old password incorrect");
-        }
-        user.setPassword(passwordEncoder.encode(newPassword));
+
+        user.setPassword(newPassword);
     }
 
     /**
@@ -62,13 +53,7 @@ public class UserServiceImpl implements UserService {
      * @throws UserNotFoundException if there is no current user
      */
     public User getCurrentUser() throws UserNotFoundException {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String username;
-        if (principal instanceof UserDetails) {
-            username = ((UserDetails)principal).getUsername();
-        } else {
-            username = principal.toString();
-        }
+        String username = "jwebber";
         LOG.info("Current user is " + username);
         User user = userRepository.findByUsername(username);
         if (user == null) {

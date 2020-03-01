@@ -19,6 +19,8 @@ apply plugin: 'application'
 // Define the main class for the application
 bootRun {
     main = 'com.webber.jogging.Application'
+    String activeProfile =  System.properties['spring.profiles.active']
+    systemProperty "spring.profiles.active", activeProfile
 }
 
 
@@ -26,7 +28,7 @@ dependencies {
     implementation  'org.springframework.boot:spring-boot-starter-web:2.1.1.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa:2.1.1.RELEASE'
     implementation 'org.springframework.boot:spring-boot-starter-data-rest:2.1.1.RELEASE'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:2.1.1.RELEASE'
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.1.2'
 
     compile 'org.apache.commons:commons-lang3:3.9'
@@ -34,7 +36,6 @@ dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.13.1'
 
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
 
     //Needed for JUnit5
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.1.1'

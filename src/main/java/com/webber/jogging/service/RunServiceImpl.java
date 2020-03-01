@@ -27,6 +27,7 @@ public class RunServiceImpl implements RunService {
         if (run.getId() != null) {
             throw new IllegalArgumentException("Run " + run + " already exists");
         }
+        run.getUser().addRun(run);
         return runRepository.save(run);
     }
 

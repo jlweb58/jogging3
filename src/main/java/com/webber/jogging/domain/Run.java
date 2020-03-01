@@ -1,5 +1,7 @@
 package com.webber.jogging.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
@@ -29,15 +31,17 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    @Column(name = "avgHeartRate", nullable = true)
+    @Column(name = "avgheartrate", nullable = true)
     private Integer avgHeartRate;
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "shoesId", nullable = true)
+    @JoinColumn(name = "shoesid", nullable = true)
+    @JsonIgnore
     private Shoes shoes;
 
-    @ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId", nullable = false)
+    @ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.LAZY)
+    @JoinColumn(name = "userid", nullable = false)
+    @JsonIgnore
     private User user;
 
     Run(Date date, String course, double distance, RunDuration runDuration,

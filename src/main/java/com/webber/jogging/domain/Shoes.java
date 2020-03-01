@@ -1,5 +1,6 @@
 package com.webber.jogging.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
@@ -15,7 +16,7 @@ public class Shoes extends AbstractPersistable<Long> implements UserResource {
     // The mileage offset is a user-configurable base value for the mileage, e.g.
     // if "used" shoes are added, where the user knows approximately how many km
     // the shoes already have.
-    @Column(name = "mileageOffset", nullable = true)
+    @Column(name = "mileageoffset", nullable = true)
     private double mileageOffset;
 
     // This is calculated dynamically on loading
@@ -24,7 +25,8 @@ public class Shoes extends AbstractPersistable<Long> implements UserResource {
     private double mileage;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "userid", nullable = false)
+    @JsonIgnore
     private User user;
 
     // An inactive shoe won't appear in the combo box for new run / edit run
@@ -106,5 +108,7 @@ public class Shoes extends AbstractPersistable<Long> implements UserResource {
         return "Shoes{" + "id=" + getId() + ", name=" + name + ", mileage=" + mileage + ", mileageOffset=" + mileageOffset + ", user=" + user
                 + ", active=" + active + ", preferred=" + preferred + '}';
     }
+
+
 
 }

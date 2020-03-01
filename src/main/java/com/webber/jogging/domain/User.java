@@ -1,5 +1,7 @@
 package com.webber.jogging.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
@@ -18,15 +20,16 @@ public class User extends AbstractPersistable<Long> {
     private String email;
 
     @Column(name = "password", nullable = false)
+    @JsonIgnore
     private String password;
 
     @Column(name = "enabled", nullable = false)
     private boolean enabled;
 
-    @OneToMany(targetEntity = Run.class, mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Run> runs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Shoes> shoes = new ArrayList<>();
 
     protected User() {
@@ -89,7 +92,13 @@ public class User extends AbstractPersistable<Long> {
     public void addShoes(Shoes newShoes) {
         if (!shoes.contains(newShoes)) {
             shoes.add(newShoes);
+            newShoes.setUser(this);
         }
+    }
+
+    public void addRun(Run newRun) {
+        runs.add(newRun);
+        newRun.setUser(this);
     }
 
     @Override
