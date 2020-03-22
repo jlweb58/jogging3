@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface RunRepository extends JpaRepository<Run, Long>, JpaSpecificationExecutor<Run> {
 
-    List<Run> findAllByUser(User user);
+    List<Run> findAllByUserOrderByDateDesc(User user);
 
 }
 

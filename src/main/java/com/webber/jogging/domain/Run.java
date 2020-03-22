@@ -16,7 +16,7 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
     private String course;
 
     @Embedded
-    private RunDuration runDuration;
+    private RunDuration runDuration = new RunDuration(0, 0, 0);
 
     @Column(name = "distance", nullable = false)
     private double distance;
@@ -80,10 +80,16 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
     }
 
     public RunDuration getRunDuration() {
+        if (runDuration == null) {
+            return new RunDuration(0, 0, 0);
+        }
         return runDuration;
     }
 
     public void setRunDuration(RunDuration runDuration) {
+        if (runDuration == null) {
+            runDuration = new RunDuration(0, 0, 0);
+        }
         this.runDuration = runDuration;
     }
 

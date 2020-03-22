@@ -5,5 +5,7 @@ spring:
     driverClassName: org.mariadb.jdbc.Driver
   profiles:
     active: localhost
+  resources:
+    static-locations: file:src/main/resources/templates
 server:
   port: 9000

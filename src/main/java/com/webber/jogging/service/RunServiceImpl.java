@@ -49,7 +49,7 @@ public class RunServiceImpl implements RunService {
 
     @Override
     public List<Run> loadAll(User user) {
-        return runRepository.findAllByUser(user);
+        return runRepository.findAllByUserOrderByDateDesc(user);
     }
 
     @Override
