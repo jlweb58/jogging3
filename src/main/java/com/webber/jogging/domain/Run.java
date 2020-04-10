@@ -36,7 +36,6 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
     @JoinColumn(name = "shoesid", nullable = true)
-    @JsonIgnore
     private Shoes shoes;
 
     @ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.LAZY)
