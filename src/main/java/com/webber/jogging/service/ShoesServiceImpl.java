@@ -46,9 +46,10 @@ public class ShoesServiceImpl implements ShoesService {
     public List<Shoes> getShoesForUser(User user, boolean onlyActive) {
         List<Shoes> allUserShoes = repository.findByUser(user);
         if (onlyActive) {
-            Stream<Shoes> shoesStream = allUserShoes.stream().filter(element -> element.isActive());
+            Stream<Shoes> shoesStream = allUserShoes.stream().filter(Shoes::isActive);
             allUserShoes = shoesStream.collect(Collectors.toList());
         }
+        allUserShoes.stream().forEach(shoes -> shoes.setMileage(getMileageForShoes(shoes)));
         return allUserShoes;
     }
 
