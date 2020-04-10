@@ -7,6 +7,9 @@ import com.webber.jogging.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,5 +29,13 @@ public class ShoesController {
         User user = userService.getCurrentUser();
         List<Shoes> shoes = shoesService.getShoesForUser(user, false);
         return ResponseEntity.ok(shoes);
+    }
+
+    @PutMapping(path = "/shoes/{id}", produces = "application/json")
+    public ResponseEntity<Shoes> updateShoes(@RequestBody Shoes shoes, @PathVariable long id) throws UserNotFoundException {
+        User user = userService.getCurrentUser();
+        shoes.setUser(user);
+        Shoes updated = shoesService.save(shoes);
+        return ResponseEntity.ok(updated);
     }
 }
