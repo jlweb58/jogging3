@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -44,8 +46,13 @@ public class UserServiceImpl implements UserService {
             throw new SecurityException("New password may not be empty");
         }
         user = userRepository.findById((Long) user.getId()).get();
-
-        user.setPassword(newPassword);
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        boolean matches = encoder.matches(oldPassword, user.getPassword());
+        if (!matches) {
+            throw new SecurityException("Old password incorrect");
+        }
+        user.setPassword(encoder.encode(newPassword));
+        userRepository.save(user);
     }
 
     /**
