@@ -7,6 +7,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -53,11 +55,12 @@ public class UserServiceImpl implements UserService {
      * @throws UserNotFoundException if there is no current user
      */
     public User getCurrentUser() throws UserNotFoundException {
-        String username = "jwebber";
-        LOG.info("Current user is " + username);
-        User user = userRepository.findByUsername(username);
+        UserDetails userDetails =
+                (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        LOG.info("Current user is " + userDetails.getUsername());
+        User user = userRepository.findByUsername(userDetails.getUsername());
         if (user == null) {
-            throw new UserNotFoundException("No user found for username " + username);
+            throw new UserNotFoundException("No user found for username " + userDetails.getUsername());
         }
         return user;
     }

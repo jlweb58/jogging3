@@ -1,5 +1,6 @@
 package com.webber.jogging.controller;
 
+import com.webber.jogging.domain.Run;
 import com.webber.jogging.domain.Shoes;
 import com.webber.jogging.domain.User;
 import com.webber.jogging.service.ShoesService;
@@ -8,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +31,14 @@ public class ShoesController {
         User user = userService.getCurrentUser();
         List<Shoes> shoes = shoesService.getShoesForUser(user, false);
         return ResponseEntity.ok(shoes);
+    }
+
+    @PostMapping(path="/shoes", produces = "application/json")
+    public ResponseEntity<Shoes> createShoes(@RequestBody Shoes shoes) throws UserNotFoundException {
+        User user = userService.getCurrentUser();
+        shoes.setUser(user);
+        Shoes created = shoesService.create(shoes);
+        return ResponseEntity.ok(created);
     }
 
     @PutMapping(path = "/shoes/{id}", produces = "application/json")

@@ -13,3 +13,7 @@ spring:
     active: localhost
 server:
   port: 9000
+webber:
+  app:
+    jwtSecret: foobar
+    jwtExpirationMs: 2000000

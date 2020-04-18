@@ -1,10 +1,9 @@
 spring:
   application:
     name: jogging
-  datasource:
-    driverClassName: org.mariadb.jdbc.Driver
   profiles:
     active: localhost
+
   resources:
     static-locations: file:src/main/resources/templates
 server:

@@ -1,12 +1,13 @@
 package com.webber.jogging.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 public class User extends AbstractPersistable<Long> {
@@ -32,6 +33,9 @@ public class User extends AbstractPersistable<Long> {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Shoes> shoes = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private Set<UserRole> userRoles = new HashSet<>();
+
     protected User() {
         //Needed for Hibernate
     }
@@ -51,7 +55,6 @@ public class User extends AbstractPersistable<Long> {
         this.username = username;
     }
 
-    //TODO Make sure this isn't serialized
     public String getPassword() {
         return password;
     }
@@ -76,7 +79,6 @@ public class User extends AbstractPersistable<Long> {
         this.email = email;
     }
 
-    //TODO make sure these are not loaded
     public List<Run> getRuns() {
         return runs;
     }
@@ -99,6 +101,14 @@ public class User extends AbstractPersistable<Long> {
     public void addRun(Run newRun) {
         runs.add(newRun);
         newRun.setUser(this);
+    }
+
+    public Set<UserRole> getUserRoles() {
+        return this.userRoles;
+    }
+
+    public void setUserRoles(Set<UserRole> userRoles) {
+        this.userRoles = userRoles;
     }
 
     @Override
