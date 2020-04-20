@@ -27,10 +27,7 @@ public class JwtUtils {
     private static final Logger LOG = LoggerFactory.getLogger(JwtUtils.class);
 
     public String generateJwtToken(Authentication authentication) {
-
         UserDetailsImpl userPrincipal = (UserDetailsImpl) authentication.getPrincipal();
-        LOG.info("Config: jwtSecret=" + jwtSecret + ", jwtExpirationMs= " + jwtExpirationMs);
-
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
