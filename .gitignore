@@ -4,3 +4,5 @@
 /.gradle/
 yarn.lock
 
+/src/main/resources/application-prod.yml
+/src/main/resources/application-localhost.yml

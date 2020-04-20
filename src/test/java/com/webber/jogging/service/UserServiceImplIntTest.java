@@ -54,7 +54,7 @@ public class UserServiceImplIntTest {
     @Test
     public void testChangePassword() {
         User user = userService.create(new User("test", "FlixBus2012", "test@test.com", true));
-        String encryptedPasswordBefore = user.getPassword();
+       String encryptedPasswordBefore = user.getPassword();
         userService.changePassword(user, "FlixBus2012", "notest");
         assertNotEquals(encryptedPasswordBefore, user.getPassword());
     }
@@ -62,7 +62,6 @@ public class UserServiceImplIntTest {
 
     public void testChangePasswordWrongOldPassword() {
         User user = userService.create(new User("test", "test", "test@test.com", true));
-        String encryptedPasswordBefore = user.getPassword();
         try {
             userService.changePassword(user, "testy", "notest");
             fail("Should have been a SecurityException");

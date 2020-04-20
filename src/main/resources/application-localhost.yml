@@ -3,7 +3,10 @@ spring:
     name: jogging
   profiles:
     active: localhost
-
+  datasource:
+    url: jdbc:mysql://localhost/jlweb
+    username: jlweb58
+    password: Wutzi!
   resources:
     static-locations: file:src/main/resources/templates
 server:

@@ -12,8 +12,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
@@ -36,6 +38,8 @@ public class UserServiceImpl implements UserService {
             throw new IllegalArgumentException("User with username " + user.getUsername() + " already exists");
         }
         String password = user.getPassword();
+        PasswordEncoder encoder = new BCryptPasswordEncoder();
+        password = encoder.encode(password);
         user.setPassword(password);
         return userRepository.save(user);
     }

@@ -1,0 +1,28 @@
+Configuration:
+  name: Default
+
+  Properties:
+    Property:
+      name: log-path
+      value: "/var/jogging/logs"
+
+  Appenders:
+    Console:
+      name: Console_Appender
+      ref: SYSTEM_OUT
+      PatternLayout:
+        Pattern:  "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+    File:
+      name: file
+      fileName: ${log-path}/jogging.log
+      PatternLayout:
+        Pattern: "[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"
+
+  Loggers:
+
+    Root:
+      level: info
+      AppenderRef:
+        - ref: Console_Appender
+        - ref: file
+
