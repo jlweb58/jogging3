@@ -10,5 +10,5 @@ server:
   port: 9000
 webber:
   app:
-    jwtSecret: foobar
-    jwtExpirationMs: 2000000
+    jwtSecret: Zm9vYmFy
+    jwtExpirationMinutes: 180

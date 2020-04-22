@@ -21,8 +21,8 @@ public class JwtUtils {
     @Value("${webber.app.jwtSecret}")
     private String jwtSecret;
 
-    @Value("${webber.app.jwtExpirationMs}")
-    private int jwtExpirationMs;
+    @Value("${webber.app.jwtExpirationMinutes}")
+    private int jwtExpirationMinutes;
 
     private static final Logger LOG = LoggerFactory.getLogger(JwtUtils.class);
 
@@ -31,7 +31,7 @@ public class JwtUtils {
         return Jwts.builder()
                 .setSubject((userPrincipal.getUsername()))
                 .setIssuedAt(new Date())
-                .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
+                .setExpiration(new Date((new Date()).getTime() + (jwtExpirationMinutes * 60 * 1000)))
                 .signWith(SignatureAlgorithm.HS512, jwtSecret)
                 .compact();
     }
