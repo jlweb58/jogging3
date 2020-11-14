@@ -43,6 +43,9 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
     @JsonIgnore
     private User user;
 
+    @Column(name = "gpxtrack", nullable = true, columnDefinition = "MEDIUMTEXT")
+    private String gpxTrack;
+
     Run(Date date, String course, double distance, RunDuration runDuration,
                String weather, String comments, Integer avgHeartRate) {
         this.date = date;
@@ -147,6 +150,14 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public String getGpxTrack() {
+        return gpxTrack;
+    }
+
+    public void setGpxTrack(String gpxTrack) {
+        this.gpxTrack = gpxTrack;
     }
 
     @Override

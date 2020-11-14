@@ -39,6 +39,7 @@ public class RunServiceImplIntTest {
     public void testCreateAndFind() {
         User user = userService.create(new User("test", "test", "test@test.com", true));
         Run run = Run.build(new Date(), "Test", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
+        run.setGpxTrack("This is a GPX track");
         Run created = runService.create(run);
         assertNotNull(created);
         Run found = runService.find(created.getId());

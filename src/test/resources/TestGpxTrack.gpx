@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx creator="StravaGPX" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.topografix.com/GPX/1/1 http://www.topografix.com/GPX/1/1/gpx.xsd http://www.garmin.com/xmlschemas/GpxExtensions/v3 http://www.garmin.com/xmlschemas/GpxExtensionsv3.xsd http://www.garmin.com/xmlschemas/TrackPointExtension/v1 http://www.garmin.com/xmlschemas/TrackPointExtensionv1.xsd" version="1.1" xmlns="http://www.topografix.com/GPX/1/1" xmlns:gpxtpx="http://www.garmin.com/xmlschemas/TrackPointExtension/v1" xmlns:gpxx="http://www.garmin.com/xmlschemas/GpxExtensions/v3">
+    <metadata>
+        <time>2020-11-01T08:30:57Z</time>
+    </metadata>
+    <trk>
+        <name>Ostpark</name>
+        <type>9</type>
+        <trkseg>
+            <trkpt lat="48.1012620" lon="11.6707190">
+                <ele>540.7</ele>
+                <time>2020-11-01T08:30:57Z</time>
+                <extensions>
+                    <gpxtpx:TrackPointExtension>
+                        <gpxtpx:hr>68</gpxtpx:hr>
+                        <gpxtpx:cad>61</gpxtpx:cad>
+                    </gpxtpx:TrackPointExtension>
+                </extensions>
+            </trkpt>
+            <trkpt lat="48.1012610" lon="11.6706970">
+                <ele>540.7</ele>
+                <time>2020-11-01T08:30:58Z</time>
+                <extensions>
+                    <gpxtpx:TrackPointExtension>
+                        <gpxtpx:hr>68</gpxtpx:hr>
+                        <gpxtpx:cad>61</gpxtpx:cad>
+                    </gpxtpx:TrackPointExtension>
+                </extensions>
+            </trkpt>
+            <trkpt lat="48.1012630" lon="11.6706700">
+                <ele>540.7</ele>
+                <time>2020-11-01T08:30:59Z</time>
+                <extensions>
+                    <gpxtpx:TrackPointExtension>
+                        <gpxtpx:hr>72</gpxtpx:hr>
+                        <gpxtpx:cad>61</gpxtpx:cad>
+                    </gpxtpx:TrackPointExtension>
+                </extensions>
+            </trkpt>
+            <trkpt lat="48.1012880" lon="11.6705300">
+                <ele>540.6</ele>
+                <time>2020-11-01T08:31:03Z</time>
+                <extensions>
+                    <gpxtpx:TrackPointExtension>
+                        <gpxtpx:hr>75</gpxtpx:hr>
+                        <gpxtpx:cad>75</gpxtpx:cad>
+                    </gpxtpx:TrackPointExtension>
+                </extensions>
+            </trkpt>
+        </trkseg>
+    </trk>
+</gpx>
