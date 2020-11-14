@@ -1,6 +1,6 @@
 package com.webber.jogging.service;
 
-import com.webber.jogging.domain.GpxTrack;
+import com.webber.jogging.domain.ParsedGpxTrack;
 import com.webber.jogging.domain.GpxTrackElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,7 +21,7 @@ public class GpxTrackParserTest {
 
     @Test
     public void testCreatesGpxTrackElement() throws Exception {
-        GpxTrack gpxTrack = gpxTrackParser.parseGpxTrack(this.getClass().getResourceAsStream("/TestGpxTrack.gpx"));
+        ParsedGpxTrack gpxTrack = gpxTrackParser.parseGpxTrack(this.getClass().getResourceAsStream("/TestGpxTrack.gpx"));
         assertNotNull(gpxTrack);
         assertNotNull(gpxTrack.getTrackElements());
         assertEquals(4, gpxTrack.getTrackElements().size());

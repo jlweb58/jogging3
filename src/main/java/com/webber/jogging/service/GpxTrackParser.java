@@ -1,6 +1,6 @@
 package com.webber.jogging.service;
 
-import com.webber.jogging.domain.GpxTrack;
+import com.webber.jogging.domain.ParsedGpxTrack;
 import com.webber.jogging.domain.GpxTrackElement;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -25,14 +25,14 @@ public final class GpxTrackParser {
     private static final String TRACK_POINT_EXTENSION = "gpxtpx:TrackPointExtension";
     private static final String HR = "gpxtpx:hr";
 
-    public GpxTrack parseGpxTrack(InputStream gpxTrackStream) throws Exception {
+    public ParsedGpxTrack parseGpxTrack(InputStream gpxTrackStream) throws Exception {
 
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(gpxTrackStream);
         Element gpx = document.getDocumentElement();
         NodeList trkPtList = gpx.getElementsByTagName(TRKPT);
-        GpxTrack gpxTrack = new GpxTrack();
+        ParsedGpxTrack gpxTrack = new ParsedGpxTrack();
         List<GpxTrackElement> childTracks = getGpxTrackElementList(trkPtList);
         gpxTrack.setTrackElements(childTracks);
         return gpxTrack;
