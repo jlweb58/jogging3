@@ -6,3 +6,7 @@ Java 13
 Spring Boot 2.1.1
 Spring REST
 Angular 9
+
+Build the application:
+
+./gradlew bootJar

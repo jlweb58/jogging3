@@ -17,6 +17,14 @@ apply plugin: 'application'
 
 wrapper { gradleVersion = '6.0' }
 
+
+
+compileJava {
+    sourceCompatibility = 11
+    targetCompatibility = 11
+}
+
+
 // Define the main class for the application
 bootRun {
     main = 'com.webber.jogging.Application'
