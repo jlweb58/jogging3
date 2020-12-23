@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
+import java.util.Optional;
 
 @Service
 public class GpxTrackServiceImpl implements GpxTrackService {
@@ -19,7 +20,7 @@ public class GpxTrackServiceImpl implements GpxTrackService {
     }
 
     @Override
-    public ParsedGpxTrack create(GpxTrack gpxTrack) throws Exception {
+    public ParsedGpxTrack save(GpxTrack gpxTrack) throws Exception {
         GpxTrack created = repository.save(gpxTrack);
         return new GpxTrackParser().parseGpxTrack(new ByteArrayInputStream(gpxTrack.getGpxTrack().getBytes()));
     }
@@ -28,5 +29,10 @@ public class GpxTrackServiceImpl implements GpxTrackService {
     public ParsedGpxTrack findForId(Long id) throws Exception {
         GpxTrack gpxTrack = repository.getOne(id);
         return new GpxTrackParser().parseGpxTrack(new ByteArrayInputStream(gpxTrack.getGpxTrack().getBytes()));
+    }
+
+    @Override
+    public Optional<GpxTrack> findUnparsedForId(Long id)  {
+            return repository.findById(id);
     }
 }

@@ -46,7 +46,7 @@ public class GpxTrackServiceImplTest {
         User user = userService.create(new User("test", "test", "test@test.com", true));
         Run run = runService.create(Run.build(new Date(), "Test", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user));
         GpxTrack gpxTrack = new GpxTrack(testGpxTrack, run, user);
-        ParsedGpxTrack createdTrack = gpxTrackService.create(gpxTrack);
+        ParsedGpxTrack createdTrack = gpxTrackService.save(gpxTrack);
         assertNotNull(createdTrack);
         ParsedGpxTrack loaded = gpxTrackService.findForId(run.getId());
         assertNotNull(loaded);
