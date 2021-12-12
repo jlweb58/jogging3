@@ -7,9 +7,15 @@ Spring Boot 2.1.1
 Spring REST
 Angular 9
 
-Build the application:
+## Build the application:
 
 ./gradlew bootJar
+
+docker build .
+docker tag jogging jlweb58/jlweb58-repo:jogging3-0.9.0
+
+Run the database locally (only works when the app runs in docker):
+docker run --net=host -d --rm -e MYSQL_ROOT_PASSWORD=pw -e MYSQL_DATABASE=db  jlweb58/jlweb58-repo:database_dump-latest
 
 Run as docker image: 
 docker run --net=host --rm -e SPRING_PROFILE=localhost jogging 
