@@ -5,8 +5,7 @@ import com.webber.jogging.domain.Run;
 import com.webber.jogging.domain.RunDuration;
 import com.webber.jogging.domain.Shoes;
 import com.webber.jogging.domain.User;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -16,10 +15,10 @@ import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 @ActiveProfiles("test")
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @Transactional
 public class ShoesServiceImplIntTest {
@@ -60,13 +59,13 @@ public class ShoesServiceImplIntTest {
         shoesService.create(shoes3);
         //Test getting only the active shoes
         List<Shoes> allShoes = shoesService.getShoesForUser(user, true);
-        assertNotNull("List was null", allShoes);
+        assertNotNull(allShoes);
         assertEquals(2, allShoes.size());
         assertTrue(allShoes.contains(shoes1));
         assertTrue(allShoes.contains(shoes2));
         //Test that we get all the shoes
         allShoes = shoesService.getShoesForUser(user, false);
-        assertNotNull("List was null", allShoes);
+        assertNotNull(allShoes);
         assertEquals(3, allShoes.size());
         assertTrue(allShoes.contains(shoes1));
         assertTrue(allShoes.contains(shoes2));

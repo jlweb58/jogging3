@@ -5,12 +5,10 @@ import com.webber.jogging.domain.Run;
 import com.webber.jogging.domain.RunDuration;
 import com.webber.jogging.domain.RunFilter;
 import com.webber.jogging.domain.User;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
@@ -18,10 +16,10 @@ import java.time.Month;
 import java.util.Date;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 @ActiveProfiles("test")
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @Transactional
 public class RunServiceImplIntTest {
@@ -73,7 +71,7 @@ public class RunServiceImplIntTest {
         runService.create(run3);
         RunFilter runFilter = new RunFilter("Test1", null, null, user);
         List<Run> runs = runService.search(runFilter);
-        assertNotNull("List was null", runs);
+        assertNotNull(runs);
         assertEquals(2, runs.size());
         assertTrue(runs.contains(run1));
         assertTrue(runs.contains(run3));
@@ -90,7 +88,7 @@ public class RunServiceImplIntTest {
         runService.create(run3);
         RunFilter runFilter = new RunFilter("Test1", null, null, user2);
         List<Run> runs = runService.search(runFilter);
-        assertNotNull("List was null", runs);
+        assertNotNull(runs);
         assertEquals(0, runs.size());
     }
 
@@ -109,13 +107,13 @@ public class RunServiceImplIntTest {
         runService.create(run3);
         RunFilter runFilter = new RunFilter("", queryDate, null, user);
         List<Run> runs = runService.search(runFilter);
-        assertNotNull("List was null", runs);
+        assertNotNull(runs);
         assertEquals(2, runs.size());
         assertTrue(runs.contains(run1));
         assertTrue(runs.contains(run2));
         runFilter = new RunFilter("", null, queryDate, user);
         runs = runService.search(runFilter);
-        assertNotNull("List was null", runs);
+        assertNotNull(runs);
         assertEquals(1, runs.size());
         assertTrue(runs.contains(run3));
     }
@@ -135,12 +133,12 @@ public class RunServiceImplIntTest {
         runService.create(run3);
         RunFilter runFilter = new RunFilter("Test2", queryDate, null, user);
         List<Run> runs = runService.search(runFilter);
-        assertNotNull("List was null", runs);
+        assertNotNull(runs);
         assertEquals(1, runs.size());
         assertTrue(runs.contains(run2));
         runFilter = new RunFilter("Test1", null, queryDate, user);
         runs = runService.search(runFilter);
-        assertNotNull("List was null", runs);
+        assertNotNull(runs);
         assertEquals(1, runs.size());
         assertTrue(runs.contains(run3));
     }

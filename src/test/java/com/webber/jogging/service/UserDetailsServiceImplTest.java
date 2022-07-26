@@ -2,8 +2,7 @@ package com.webber.jogging.service;
 
 import com.webber.jogging.Application;
 import com.webber.jogging.domain.User;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,11 +14,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
+
 
 @ActiveProfiles("test")
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = Application.class)
 @Transactional
 public class UserDetailsServiceImplTest {
@@ -42,8 +40,10 @@ public class UserDetailsServiceImplTest {
         assertEquals(username, userDetails.getUsername());
     }
 
-    @Test(expected = UsernameNotFoundException.class)
+    @Test
     public void loadUserByUsernameNotFound() {
+        assertThrows(UsernameNotFoundException.class, () -> {
         userDetailsService.loadUserByUsername("foo");
+        });
     }
 }
