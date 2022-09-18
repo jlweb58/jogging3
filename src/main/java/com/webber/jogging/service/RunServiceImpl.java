@@ -15,7 +15,7 @@ import java.util.Optional;
 @Service
 public class RunServiceImpl implements RunService {
 
-    private RunRepository runRepository;
+    private final RunRepository runRepository;
 
     @Autowired
     public RunServiceImpl(RunRepository runRepository) {
