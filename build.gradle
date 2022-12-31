@@ -54,6 +54,8 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}"
     testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
 
+    compileOnly "javax.persistence:javax.persistence-api:2.2"
+
     //Needed for JUnit5
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.1.1"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.1.1"
