@@ -28,7 +28,7 @@ public class User extends AbstractPersistable<Long> {
     private boolean enabled;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Run> runs = new ArrayList<>();
+    private List<Activity> activities = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Shoes> shoes = new ArrayList<>();
@@ -79,8 +79,8 @@ public class User extends AbstractPersistable<Long> {
         this.email = email;
     }
 
-    public List<Run> getRuns() {
-        return runs;
+    public List<Activity> getRuns() {
+        return activities;
     }
 
     public List<Shoes> getShoes() {
@@ -98,9 +98,9 @@ public class User extends AbstractPersistable<Long> {
         }
     }
 
-    public void addRun(Run newRun) {
-        runs.add(newRun);
-        newRun.setUser(this);
+    public void addRun(Activity newActivity) {
+        activities.add(newActivity);
+        newActivity.setUser(this);
     }
 
     public Set<UserRole> getUserRoles() {

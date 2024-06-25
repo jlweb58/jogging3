@@ -29,7 +29,7 @@ public class GpxTrackServiceImplTest {
     private UserService userService;
 
     @Autowired
-    private RunService runService;
+    private ActivityService activityService;
 
     private String testGpxTrack;
 
@@ -41,11 +41,11 @@ public class GpxTrackServiceImplTest {
     @Test
     public void testCreateAndFind() throws Exception {
         User user = userService.create(new User("test", "test", "test@test.com", true));
-        Run run = runService.create(Run.build(new Date(), "Test", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN));
-        GpxTrack gpxTrack = new GpxTrack(testGpxTrack, run, user);
+        Activity activity = activityService.create(Activity.build(new Date(), "Test", 5.2, new ActivityDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN));
+        GpxTrack gpxTrack = new GpxTrack(testGpxTrack, activity, user);
         ParsedGpxTrack createdTrack = gpxTrackService.save(gpxTrack);
         assertNotNull(createdTrack);
-        ParsedGpxTrack loaded = gpxTrackService.findForId(run.getId());
+        ParsedGpxTrack loaded = gpxTrackService.findForId(activity.getId());
         assertNotNull(loaded);
         assertEquals(4, loaded.getTrackElements().size());
     }

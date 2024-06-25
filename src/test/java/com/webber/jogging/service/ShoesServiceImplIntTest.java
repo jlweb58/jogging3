@@ -6,7 +6,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.transaction.Transactional;
 import java.util.Date;
@@ -27,7 +26,7 @@ public class ShoesServiceImplIntTest {
     private UserService userService;
 
     @Autowired
-    private RunService runService;
+    private ActivityService activityService;
 
     @Test
     public void testCreateAndFind() {
@@ -81,15 +80,15 @@ public class ShoesServiceImplIntTest {
     public void testGetShoesForUserMileage() {
         User user = userService.create(new User("test", "test", "test@test.com", true));
         Shoes shoes = new Shoes("MyShoes1", 0, user);
-        RunDuration runDuration = new RunDuration(0, 28, 33);
-        Run run = Run.build(new Date(), "Mü2", 5.2, runDuration, "15 pc", "Felt good", 140, user, ActivityType.RUN);
-        run.setShoes(shoes);
-        runService.create(run);
+        ActivityDuration activityDuration = new ActivityDuration(0, 28, 33);
+        Activity activity = Activity.build(new Date(), "Mü2", 5.2, activityDuration, "15 pc", "Felt good", 140, user, ActivityType.RUN);
+        activity.setShoes(shoes);
+        activityService.create(activity);
         shoes = shoesService.create(shoes);
-        assertEquals(5.2, shoes.getMileage(), 0.0);
+        assertEquals(5.2, shoes.getMileage(), 0.01);
         shoes.setMileageOffset(10.0);
         shoes = shoesService.save(shoes);
-        assertEquals(15.2, shoes.getMileage(), 0.0);
+        assertEquals(15.2, shoes.getMileage(), 0.01);
     }
 
 

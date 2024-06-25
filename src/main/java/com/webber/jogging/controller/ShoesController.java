@@ -1,6 +1,5 @@
 package com.webber.jogging.controller;
 
-import com.webber.jogging.domain.Run;
 import com.webber.jogging.domain.Shoes;
 import com.webber.jogging.domain.User;
 import com.webber.jogging.service.ShoesService;

@@ -5,9 +5,9 @@ import java.util.Date;
 
 
 /**
- * Encapsulates queries for runs.
+ * Encapsulates queries for activities.
  */
-public class RunFilter implements Serializable {
+public class ActivityFilter implements Serializable {
 
 
     private static final long serialVersionUID = -2492458006059511810L;
@@ -21,14 +21,14 @@ public class RunFilter implements Serializable {
     private final User user;
 
     /***
-     * Create a run filter with the given parameters, any of which may be null.
+     * Create an activity filter with the given parameters, any of which may be null.
      *
      * @param course    The course to match
      * @param startDate The start date (inclusive)
      * @param endDate   The end date (exclusive)
      * @param user      The owner of the run
      */
-    public RunFilter(String course, Date startDate, Date endDate, User user) {
+    public ActivityFilter(String course, Date startDate, Date endDate, User user) {
         this.course = course;
         this.startDate = startDate;
         this.endDate = endDate;

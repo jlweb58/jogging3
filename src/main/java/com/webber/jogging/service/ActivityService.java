@@ -1,37 +1,37 @@
 package com.webber.jogging.service;
 
-import com.webber.jogging.domain.Run;
-import com.webber.jogging.domain.RunFilter;
+import com.webber.jogging.domain.Activity;
+import com.webber.jogging.domain.ActivityFilter;
 import com.webber.jogging.domain.User;
 
 import java.util.Date;
 import java.util.List;
 
-public interface RunService {
+public interface ActivityService {
     /**
      * Create a new run. The run must not already be persistent, and its user must be set.
      *
-     * @param run  The run to create.
+     * @param activity  The run to create.
      * @return  The run after it has been made persistent.
      */
-    Run create(Run run);
+    Activity create(Activity activity);
 
     /**
      * Save a run - this method is used to
      * modify an existing object.
      *
-     * @param run
+     * @param activity
      *          The run to create or modify.
      * @return The run after creation or modification.
      */
-    Run save(Run run);
+    Activity save(Activity activity);
 
     /**
      * Delete the given run from persistent storage.
      *
-     * @param run  The run to delete.
+     * @param activity  The run to delete.
      */
-    void delete(Run run);
+    void delete(Activity activity);
 
     /**
      * Find the run with the given ID
@@ -39,21 +39,21 @@ public interface RunService {
      * @param id  The id
      * @return  The run with that ID, or null if it doesn't exist.
      */
-    Run find(long id);
+    Activity find(long id);
 
     /**
      * Load all runs from the database for the given user.
      * @param user The owner of the runs
      * @return  A List of all runs in the database belonging to the given user.
      */
-    List<Run> loadAll(User user);
+    List<Activity> loadAll(User user);
 
     /**
      * Load a list of runs matching the given filter.
-     * @param runFilter  The filter criteria
+     * @param activityFilter  The filter criteria
      * @return  A list of runs matching the filter, or an empty list.
      */
-    List<Run> search(RunFilter runFilter);
+    List<Activity> search(ActivityFilter activityFilter);
 
     /**
      * Get the total distance for the given date range.

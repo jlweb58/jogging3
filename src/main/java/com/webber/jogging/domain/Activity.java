@@ -1,14 +1,13 @@
 package com.webber.jogging.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Run extends AbstractPersistable<Long> implements UserResource {
+public class Activity extends AbstractPersistable<Long> implements UserResource {
 
     private static final long serialVersionUID = -8506894102933517235L;
 
@@ -16,7 +15,7 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
     private String course;
 
     @Embedded
-    private RunDuration runDuration = new RunDuration(0, 0, 0);
+    private ActivityDuration activityDuration = new ActivityDuration(0, 0, 0);
 
     @Column(name = "distance", nullable = false)
     private double distance;
@@ -46,26 +45,26 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
     @Column(name = "activitytype", nullable = true)
     private ActivityType activityType;
 
-    Run(Date date, String course, double distance, RunDuration runDuration,
-               String weather, String comments, Integer avgHeartRate) {
+    Activity(Date date, String course, double distance, ActivityDuration activityDuration,
+             String weather, String comments, Integer avgHeartRate) {
         this.date = date;
         this.course = course;
         this.distance = distance;
-        this.runDuration = runDuration;
+        this.activityDuration = activityDuration;
         this.weather = weather;
         this.comments = comments;
         this.avgHeartRate = avgHeartRate;
     }
 
-    public static Run build(Date date, String course, double distance, RunDuration runDuration,
-                            String weather, String comments, Integer avgHeartRate, User user, ActivityType activityType) {
-        Run run = new Run(date, course, distance, runDuration, weather, comments, avgHeartRate);
-        run.setUser(user);
-        run.setActivityType(activityType);
-        return run;
+    public static Activity build(Date date, String course, double distance, ActivityDuration activityDuration,
+                                 String weather, String comments, Integer avgHeartRate, User user, ActivityType activityType) {
+        Activity activity = new Activity(date, course, distance, activityDuration, weather, comments, avgHeartRate);
+        activity.setUser(user);
+        activity.setActivityType(activityType);
+        return activity;
     }
 
-    protected Run() {
+    protected Activity() {
 
         //needed for JPA
     }
@@ -78,18 +77,18 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
         this.course = name;
     }
 
-    public RunDuration getRunDuration() {
-        if (runDuration == null) {
-            return new RunDuration(0, 0, 0);
+    public ActivityDuration getRunDuration() {
+        if (activityDuration == null) {
+            return new ActivityDuration(0, 0, 0);
         }
-        return runDuration;
+        return activityDuration;
     }
 
-    public void setRunDuration(RunDuration runDuration) {
-        if (runDuration == null) {
-            runDuration = new RunDuration(0, 0, 0);
+    public void setRunDuration(ActivityDuration activityDuration) {
+        if (activityDuration == null) {
+            activityDuration = new ActivityDuration(0, 0, 0);
         }
-        this.runDuration = runDuration;
+        this.activityDuration = activityDuration;
     }
 
     public double getDistance() {
@@ -159,7 +158,7 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
 
     @Override
     public String toString() {
-        return "Run{" + "id=" + getId() + ", course=" + course + ", runDuration=" + runDuration + ", distance=" + distance + ", comments="
+        return "Run{" + "id=" + getId() + ", course=" + course + ", activityDuration=" + activityDuration + ", distance=" + distance + ", comments="
                 + comments + ", weather=" + weather + ", date=" + date + ", avgHeartRate=" + avgHeartRate + ", shoes=" + shoes + ", user="
                 + user + ", activityType=" + activityType
                 + '}';

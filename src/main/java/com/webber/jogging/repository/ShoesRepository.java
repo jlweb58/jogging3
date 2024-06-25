@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface ShoesRepository extends JpaRepository<Shoes, Long> {
 
-    @Query("Select sum(distance) from Run r where r.shoes = :shoes")
+    @Query("Select sum(distance) from Activity r where r.shoes = :shoes")
     Double getMileageForShoes(@Param("shoes") Shoes shoes);
 
     List<Shoes> findByUser(User user);

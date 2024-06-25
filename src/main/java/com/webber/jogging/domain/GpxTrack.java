@@ -1,7 +1,6 @@
 package com.webber.jogging.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 
@@ -19,7 +18,7 @@ public class GpxTrack implements UserResource {
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id", nullable = false)
     @MapsId
-    private Run run;
+    private Activity activity;
 
     @ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "userid", nullable = false)
@@ -31,9 +30,9 @@ public class GpxTrack implements UserResource {
         super();
     }
 
-    public GpxTrack(String gpxTrack, Run run, User user) {
+    public GpxTrack(String gpxTrack, Activity activity, User user) {
         this.gpxTrack = gpxTrack;
-        this.run = run;
+        this.activity = activity;
         this.user = user;
     }
 
@@ -54,12 +53,12 @@ public class GpxTrack implements UserResource {
         this.gpxTrack = gpxTrack;
     }
 
-    public Run getRun() {
-        return run;
+    public Activity getRun() {
+        return activity;
     }
 
-    public void setRun(Run run) {
-        this.run = run;
+    public void setRun(Activity activity) {
+        this.activity = activity;
     }
 
     @Override
@@ -67,7 +66,7 @@ public class GpxTrack implements UserResource {
         return "GpxTrack{" +
                 "id=" + id +
                 ", gpxTrack='" + gpxTrack + '\'' +
-                ", run=" + run +
+                ", run=" + activity +
                 ", user=" + user +
                 '}';
     }
