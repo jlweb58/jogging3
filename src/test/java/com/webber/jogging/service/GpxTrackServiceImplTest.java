@@ -41,7 +41,7 @@ public class GpxTrackServiceImplTest {
     @Test
     public void testCreateAndFind() throws Exception {
         User user = userService.create(new User("test", "test", "test@test.com", true));
-        Run run = runService.create(Run.build(new Date(), "Test", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user));
+        Run run = runService.create(Run.build(new Date(), "Test", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN));
         GpxTrack gpxTrack = new GpxTrack(testGpxTrack, run, user);
         ParsedGpxTrack createdTrack = gpxTrackService.save(gpxTrack);
         assertNotNull(createdTrack);

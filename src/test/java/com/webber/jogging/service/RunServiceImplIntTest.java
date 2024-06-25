@@ -1,10 +1,7 @@
 package com.webber.jogging.service;
 
 import com.webber.jogging.Application;
-import com.webber.jogging.domain.Run;
-import com.webber.jogging.domain.RunDuration;
-import com.webber.jogging.domain.RunFilter;
-import com.webber.jogging.domain.User;
+import com.webber.jogging.domain.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -36,7 +33,7 @@ public class RunServiceImplIntTest {
     @Test
     public void testCreateAndFind() {
         User user = userService.create(new User("test", "test", "test@test.com", true));
-        Run run = Run.build(new Date(), "Test", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
+        Run run = Run.build(new Date(), "Test", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
         Run created = runService.create(run);
         assertNotNull(created);
         Run found = runService.find(created.getId());
@@ -46,9 +43,9 @@ public class RunServiceImplIntTest {
     @Test
     public void testLoadAllForUser() {
         User user = userService.create(new User("test", "test", "test@test.com", true));
-        Run run1 = Run.build(new Date(), "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
-        Run run2 = Run.build(new Date(), "Test2", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
-        Run run3 = Run.build(new Date(), "Test3", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
+        Run run1 = Run.build(new Date(), "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
+        Run run2 = Run.build(new Date(), "Test2", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
+        Run run3 = Run.build(new Date(), "Test3", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
         runService.create(run1);
         runService.create(run2);
         runService.create(run3);
@@ -63,9 +60,9 @@ public class RunServiceImplIntTest {
     @Test
     public void testFilterForCourseAndUser() {
         User user = userService.create(new User("test", "test", "test@test.com", true));
-        Run run1 = Run.build(new Date(), "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
-        Run run2 = Run.build(new Date(), "Test2", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
-        Run run3 = Run.build(new Date(), "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
+        Run run1 = Run.build(new Date(), "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
+        Run run2 = Run.build(new Date(), "Test2", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
+        Run run3 = Run.build(new Date(), "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
         runService.create(run1);
         runService.create(run2);
         runService.create(run3);
@@ -80,9 +77,9 @@ public class RunServiceImplIntTest {
     public void testFilterForCourseWrongUser() {
         User user1 = userService.create(new User("test1", "test", "test@test.com", true));
         User user2 = userService.create(new User("test2", "test", "test@test.com", true));
-        Run run1 = Run.build(new Date(), "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user1);
-        Run run2 = Run.build(new Date(), "Test2", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user1);
-        Run run3 = Run.build(new Date(), "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user1);
+        Run run1 = Run.build(new Date(), "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user1, ActivityType.RUN);
+        Run run2 = Run.build(new Date(), "Test2", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user1, ActivityType.RUN);
+        Run run3 = Run.build(new Date(), "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user1, ActivityType.RUN);
         runService.create(run1);
         runService.create(run2);
         runService.create(run3);
@@ -99,9 +96,9 @@ public class RunServiceImplIntTest {
         Date date2 = java.sql.Date.valueOf(LocalDate.of(2019, Month.NOVEMBER, 1));
         Date date3 = java.sql.Date.valueOf(LocalDate.of(2019, Month.OCTOBER, 1));
         Date queryDate = java.sql.Date.valueOf(LocalDate.of(2019, Month.OCTOBER, 31));
-        Run run1 = Run.build(date1, "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
-        Run run2 = Run.build(date2, "Test2", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
-        Run run3 = Run.build(date3, "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
+        Run run1 = Run.build(date1, "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
+        Run run2 = Run.build(date2, "Test2", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
+        Run run3 = Run.build(date3, "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
         runService.create(run1);
         runService.create(run2);
         runService.create(run3);
@@ -125,9 +122,9 @@ public class RunServiceImplIntTest {
         Date date2 = java.sql.Date.valueOf(LocalDate.of(2019, Month.NOVEMBER, 1));
         Date date3 = java.sql.Date.valueOf(LocalDate.of(2019, Month.OCTOBER, 1));
         Date queryDate = java.sql.Date.valueOf(LocalDate.of(2019, Month.OCTOBER, 31));
-        Run run1 = Run.build(date1, "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
-        Run run2 = Run.build(date2, "Test2", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
-        Run run3 = Run.build(date3, "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
+        Run run1 = Run.build(date1, "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
+        Run run2 = Run.build(date2, "Test2", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
+        Run run3 = Run.build(date3, "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
         runService.create(run1);
         runService.create(run2);
         runService.create(run3);
@@ -150,9 +147,9 @@ public class RunServiceImplIntTest {
         Date date2 = java.sql.Date.valueOf(LocalDate.of(2019, Month.NOVEMBER, 1));
         Date date3 = java.sql.Date.valueOf(LocalDate.of(2019, Month.OCTOBER, 1));
         Date queryDate = java.sql.Date.valueOf(LocalDate.of(2019, Month.OCTOBER, 31));
-        Run run1 = Run.build(date1, "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
-        Run run2 = Run.build(date2, "Test2", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
-        Run run3 = Run.build(date3, "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user);
+        Run run1 = Run.build(date1, "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
+        Run run2 = Run.build(date2, "Test2", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
+        Run run3 = Run.build(date3, "Test1", 5.2, new RunDuration(0, 31, 2), "13 Sunny", "blabla", 125, user, ActivityType.RUN);
         runService.create(run1);
         runService.create(run2);
         runService.create(run3);

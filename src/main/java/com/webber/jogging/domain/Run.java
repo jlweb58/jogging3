@@ -43,6 +43,9 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
     @JsonIgnore
     private User user;
 
+    @Column(name = "activitytype", nullable = true)
+    private ActivityType activityType;
+
     Run(Date date, String course, double distance, RunDuration runDuration,
                String weather, String comments, Integer avgHeartRate) {
         this.date = date;
@@ -55,14 +58,11 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
     }
 
     public static Run build(Date date, String course, double distance, RunDuration runDuration,
-                            String weather, String comments, Integer avgHeartRate, User user) {
+                            String weather, String comments, Integer avgHeartRate, User user, ActivityType activityType) {
         Run run = new Run(date, course, distance, runDuration, weather, comments, avgHeartRate);
         run.setUser(user);
+        run.setActivityType(activityType);
         return run;
-    }
-
-    public static Run build(Date date, double distance, RunDuration runDuration, User user) {
-        return build(date, null, distance, runDuration, null, null, null, user);
     }
 
     protected Run() {
@@ -149,10 +149,19 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
         this.user = user;
     }
 
+    public ActivityType getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(ActivityType activityType) {
+        this.activityType = activityType;
+    }
+
     @Override
     public String toString() {
         return "Run{" + "id=" + getId() + ", course=" + course + ", runDuration=" + runDuration + ", distance=" + distance + ", comments="
-                + comments + ", weather=" + weather + ", date=" + date + ", avgHeartRate=" + avgHeartRate + ", shoes=" + shoes + ", user=" + user
+                + comments + ", weather=" + weather + ", date=" + date + ", avgHeartRate=" + avgHeartRate + ", shoes=" + shoes + ", user="
+                + user + ", activityType=" + activityType
                 + '}';
     }
 

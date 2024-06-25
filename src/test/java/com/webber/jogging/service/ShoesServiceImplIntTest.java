@@ -1,10 +1,7 @@
 package com.webber.jogging.service;
 
 import com.webber.jogging.Application;
-import com.webber.jogging.domain.Run;
-import com.webber.jogging.domain.RunDuration;
-import com.webber.jogging.domain.Shoes;
-import com.webber.jogging.domain.User;
+import com.webber.jogging.domain.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -85,7 +82,7 @@ public class ShoesServiceImplIntTest {
         User user = userService.create(new User("test", "test", "test@test.com", true));
         Shoes shoes = new Shoes("MyShoes1", 0, user);
         RunDuration runDuration = new RunDuration(0, 28, 33);
-        Run run = Run.build(new Date(), "Mü2", 5.2, runDuration, "15 pc", "Felt good", 140, user);
+        Run run = Run.build(new Date(), "Mü2", 5.2, runDuration, "15 pc", "Felt good", 140, user, ActivityType.RUN);
         run.setShoes(shoes);
         runService.create(run);
         shoes = shoesService.create(shoes);
