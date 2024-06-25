@@ -3,17 +3,17 @@ ALTER TABLE run
 RENAME TO activity;
 
 ALTER TABLE activity
-ADD COLUMN activity_type VARCHAR(16);
+ADD COLUMN activitytype VARCHAR(16);
 
 UPDATE activity
-SET activity_type = 'RUN'
+SET activitytype = 'RUN'
 WHERE course NOT IN ('Rad', 'Swim');
 
 UPDATE activity
-SET activity_type = 'SWIM'
+SET activitytype = 'SWIM'
 where course = 'Swim';
 
 UPDATE activity
-SET activity_type = 'BIKE_RIDE'
+SET activitytype = 'BIKE_RIDE'
 where course = 'Rad';
 

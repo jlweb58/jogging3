@@ -42,6 +42,7 @@ public class Activity extends AbstractPersistable<Long> implements UserResource 
     @JsonIgnore
     private User user;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "activitytype", nullable = true)
     private ActivityType activityType;
 
