@@ -32,9 +32,14 @@ bootRun {
     systemProperty "spring.profiles.active", activeProfile
 }
 
+test {
+    useJUnitPlatform()
+}
+
 application {
     mainClassName =  "com.webber.jogging.Application"
 }
+
 dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"

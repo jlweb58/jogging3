@@ -6,7 +6,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 import javax.persistence.*;
 
 @Entity
-public class Shoes extends AbstractPersistable<Long> implements UserResource {
+public class Gear extends AbstractPersistable<Long> implements UserResource {
 
     private static final long serialVersionUID = 2095849911820717778L;
 
@@ -14,8 +14,8 @@ public class Shoes extends AbstractPersistable<Long> implements UserResource {
     private String name;
 
     // The mileage offset is a user-configurable base value for the mileage, e.g.
-    // if "used" shoes are added, where the user knows approximately how many km
-    // the shoes already have.
+    // if "used" gear is added, where the user knows approximately how many km
+    // the gear already has.
     @Column(name = "mileageoffset", nullable = true)
     private double mileageOffset;
 
@@ -29,27 +29,27 @@ public class Shoes extends AbstractPersistable<Long> implements UserResource {
     @JsonIgnore
     private User user;
 
-    // An inactive shoe won't appear in the combo box for new run / edit run
+    // Inactive gear won't appear in the combo box for new activity / edit activity
     @Column(name = "active", nullable = false)
     private boolean active;
 
-    // Whether these shoes are the current default pair (not allowed to call the
+    // Whether this gear is the current default (not allowed to call the
     // field "default"
     @Column(name = "preferred", nullable = false)
     private boolean preferred;
 
-    public Shoes(String name, double mileageOffset, User user) {
+    public Gear(String name, double mileageOffset, User user) {
         this.name = name;
         this.mileageOffset = mileageOffset;
         this.user = user;
         this.active = true;
     }
 
-    public Shoes(String name, User user) {
+    public Gear(String name, User user) {
         this(name, 0.0, user);
     }
 
-    protected Shoes() {
+    protected Gear() {
 
         //for JPA
     }
@@ -105,7 +105,7 @@ public class Shoes extends AbstractPersistable<Long> implements UserResource {
 
     @Override
     public String toString() {
-        return "Shoes{" + "id=" + getId() + ", name=" + name + ", mileage=" + mileage + ", mileageOffset=" + mileageOffset + ", user=" + user
+        return "Gear{" + "id=" + getId() + ", name=" + name + ", mileage=" + mileage + ", mileageOffset=" + mileageOffset + ", user=" + user
                 + ", active=" + active + ", preferred=" + preferred + '}';
     }
 

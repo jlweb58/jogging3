@@ -26,8 +26,8 @@ public class GpxTrackServiceImpl implements GpxTrackService {
     }
 
     @Override
-    public ParsedGpxTrack findForId(Long id) throws Exception {
-        GpxTrack gpxTrack = repository.getOne(id);
+    public ParsedGpxTrack findForId(Long activityId) throws Exception {
+        GpxTrack gpxTrack = repository.getOne(activityId);
         return new GpxTrackParser().parseGpxTrack(new ByteArrayInputStream(gpxTrack.getGpxTrack().getBytes()));
     }
 

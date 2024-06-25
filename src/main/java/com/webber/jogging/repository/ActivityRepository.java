@@ -1,16 +1,15 @@
 package com.webber.jogging.repository;
 
-import com.webber.jogging.domain.Run;
-import com.webber.jogging.domain.RunFilter;
+import com.webber.jogging.domain.Activity;
 import com.webber.jogging.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
 import java.util.List;
 
-public interface RunRepository extends JpaRepository<Run, Long>, JpaSpecificationExecutor<Run> {
+public interface ActivityRepository extends JpaRepository<Activity, Long>, JpaSpecificationExecutor<Activity> {
 
-    List<Run> findAllByUserOrderByDateDesc(User user);
+    List<Activity> findAllByUserOrderByDateDesc(User user);
 
 }
 

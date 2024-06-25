@@ -1,16 +1,18 @@
 package com.webber.jogging.controller;
 
+import com.webber.jogging.domain.Activity;
 import com.webber.jogging.domain.GpxTrack;
 import com.webber.jogging.domain.ParsedGpxTrack;
-import com.webber.jogging.domain.Run;
 import com.webber.jogging.domain.User;
 import com.webber.jogging.service.GpxTrackService;
-import com.webber.jogging.service.RunService;
+import com.webber.jogging.service.ActivityService;
 import com.webber.jogging.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.Optional;
 
 @RestController
@@ -24,22 +26,27 @@ public class GpxTrackController {
     private UserService userService;
 
     @Autowired
-    private RunService runService;
+    private ActivityService activityService;
 
     @GetMapping(path = "/gpxtrack/{id}", produces = "application/json")
-    public ResponseEntity<ParsedGpxTrack> getForRun(@PathVariable Long id) throws Exception {
+    public ResponseEntity<ParsedGpxTrack> getForActivity(@PathVariable Long id) throws Exception {
+
+        try {
             ParsedGpxTrack parsedGpxTrack = gpxTrackService.findForId(id);
             return ResponseEntity.ok(parsedGpxTrack);
+        } catch (EntityNotFoundException e) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
     }
 
     @PostMapping(path = "/gpxtrack/{id}", produces = "application/json")
     public ResponseEntity<ParsedGpxTrack> saveGpxTrack(@RequestBody String gpxData, @PathVariable Long id) throws Exception {
         User user = userService.getCurrentUser();
-        Run run = runService.find(id);
+        Activity activity = activityService.find(id);
         GpxTrack gpxTrack;
         Optional<GpxTrack> optional = gpxTrackService.findUnparsedForId(id);
         if (optional.isEmpty()) {
-            gpxTrack = new GpxTrack(gpxData, run, user);
+            gpxTrack = new GpxTrack(gpxData, activity, user);
         } else {
             gpxTrack = optional.get();
             gpxTrack.setGpxTrack(gpxData);

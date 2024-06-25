@@ -1,8 +1,8 @@
 package com.webber.jogging.controller;
 
-import com.webber.jogging.domain.Run;
+import com.webber.jogging.domain.Gear;
 import com.webber.jogging.domain.User;
-import com.webber.jogging.service.RunService;
+import com.webber.jogging.service.GearService;
 import com.webber.jogging.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,40 +18,33 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/jogging")
-public class RunController {
-
+public class GearController {
     @Autowired
     private UserService userService;
 
     @Autowired
-    private RunService runService;
+    private GearService gearService;
 
-    @GetMapping(path = "/hello")
-    public String sayPlainTextHello() {
-        return "Hello";
+    @GetMapping(path = "/gear", produces = "application/json")
+    public ResponseEntity<List<Gear>> listAll() throws UserNotFoundException {
+        User user = userService.getCurrentUser();
+        List<Gear> shoes = gearService.getGearForUser(user, false);
+        return ResponseEntity.ok(shoes);
     }
 
-    @GetMapping(path = "/runs", produces = "application/json")
-    public ResponseEntity<List<Run>> listAll() throws UserNotFoundException {
+    @PostMapping(path="/gear", produces = "application/json")
+    public ResponseEntity<Gear> createGear(@RequestBody Gear gear) throws UserNotFoundException {
         User user = userService.getCurrentUser();
-        List<Run> runs = runService.loadAll(user);
-        return ResponseEntity.ok(runs);
-    }
-
-    @PostMapping(path="/runs", produces = "application/json")
-    public ResponseEntity<Run> createRun(@RequestBody Run run) throws UserNotFoundException {
-        User user = userService.getCurrentUser();
-        run.setUser(user);
-        Run created = runService.create(run);
+        gear.setUser(user);
+        Gear created = gearService.create(gear);
         return ResponseEntity.ok(created);
     }
 
-    @PutMapping(path="/runs/{id}", produces = "application/json")
-    public ResponseEntity<Run> updateRun(@RequestBody Run run,@PathVariable Long id) throws UserNotFoundException {
+    @PutMapping(path = "/gear/{id}", produces = "application/json")
+    public ResponseEntity<Gear> updateGear(@RequestBody Gear gear, @PathVariable long id) throws UserNotFoundException {
         User user = userService.getCurrentUser();
-        run.setUser(user);
-        Run updated = runService.save(run);
+        gear.setUser(user);
+        Gear updated = gearService.save(gear);
         return ResponseEntity.ok(updated);
     }
-
 }
