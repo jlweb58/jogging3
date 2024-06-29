@@ -7,6 +7,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
 import javax.transaction.Transactional;
 
@@ -41,6 +43,16 @@ public class StravaAuthenticationServiceImplTest {
         assertEquals(foundAuthentication.getAccessToken(), "12345");
         assertEquals(foundAuthentication.getRefreshToken(), "67890");
         assertNotNull(foundAuthentication.getId());
+    }
+
+    @Test
+    public void testObtainAccessTokenIntTest() {
+        User user = userService.create(new User("test", "test", "test@test.com", true));
+
+        StravaAuthentication response = service.obtainAccessToken(user);
+        assertNotNull(response);
+        System.out.println(response);
+
     }
 
 }
