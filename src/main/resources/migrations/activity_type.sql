@@ -14,6 +14,7 @@ SET activitytype = 'SWIM'
 where course = 'Swim';
 
 UPDATE activity
-SET activitytype = 'BIKE_RIDE'
+SET activitytype = 'BIKE'
 where course = 'Rad';
+
 

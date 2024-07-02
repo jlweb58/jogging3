@@ -47,7 +47,7 @@ public class Activity extends AbstractPersistable<Long> implements UserResource 
     private ActivityType activityType;
 
     Activity(Date date, String course, double distance, ActivityDuration activityDuration,
-             String weather, String comments, Integer avgHeartRate) {
+             String weather, String comments, Integer avgHeartRate, ActivityType activityType) {
         this.date = date;
         this.course = course;
         this.distance = distance;
@@ -55,13 +55,13 @@ public class Activity extends AbstractPersistable<Long> implements UserResource 
         this.weather = weather;
         this.comments = comments;
         this.avgHeartRate = avgHeartRate;
+        this.activityType = activityType;
     }
 
     public static Activity build(Date date, String course, double distance, ActivityDuration activityDuration,
                                  String weather, String comments, Integer avgHeartRate, User user, ActivityType activityType) {
-        Activity activity = new Activity(date, course, distance, activityDuration, weather, comments, avgHeartRate);
+        Activity activity = new Activity(date, course, distance, activityDuration, weather, comments, avgHeartRate, activityType);
         activity.setUser(user);
-        activity.setActivityType(activityType);
         return activity;
     }
 
