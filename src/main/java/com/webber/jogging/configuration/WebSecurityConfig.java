@@ -80,8 +80,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests().antMatchers("/jogging/login/**").permitAll()
                 .antMatchers("/jogging/test/**").permitAll()
                 .antMatchers(HttpMethod.OPTIONS, "jogging/**").permitAll()
-                .antMatchers("/jogging/runs/**").authenticated()
-                .antMatchers("/jogging/shoes/**").authenticated()
+                .antMatchers("/jogging/activities/**").authenticated()
+                .antMatchers("/jogging/gear/**").authenticated()
                 .anyRequest().authenticated();
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);

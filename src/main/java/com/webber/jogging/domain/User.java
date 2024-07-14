@@ -28,10 +28,10 @@ public class User extends AbstractPersistable<Long> {
     private boolean enabled;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Run> runs = new ArrayList<>();
+    private List<Activity> activities = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Shoes> shoes = new ArrayList<>();
+    private List<Gear> gear = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserRole> userRoles = new HashSet<>();
@@ -79,28 +79,28 @@ public class User extends AbstractPersistable<Long> {
         this.email = email;
     }
 
-    public List<Run> getRuns() {
-        return runs;
+    public List<Activity> getActivities() {
+        return activities;
     }
 
-    public List<Shoes> getShoes() {
-        return shoes;
+    public List<Gear> getGear() {
+        return gear;
     }
 
-    public void setShoes(List<Shoes> shoes) {
-        this.shoes = shoes;
+    public void setGear(List<Gear> gear) {
+        this.gear = gear;
     }
 
-    public void addShoes(Shoes newShoes) {
-        if (!shoes.contains(newShoes)) {
-            shoes.add(newShoes);
-            newShoes.setUser(this);
+    public void addGear(Gear newGear) {
+        if (!gear.contains(newGear)) {
+            gear.add(newGear);
+            newGear.setUser(this);
         }
     }
 
-    public void addRun(Run newRun) {
-        runs.add(newRun);
-        newRun.setUser(this);
+    public void addActivity(Activity newActivity) {
+        activities.add(newActivity);
+        newActivity.setUser(this);
     }
 
     public Set<UserRole> getUserRoles() {

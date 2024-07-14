@@ -1,14 +1,13 @@
 package com.webber.jogging.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Run extends AbstractPersistable<Long> implements UserResource {
+public class Activity extends AbstractPersistable<Long> implements UserResource {
 
     private static final long serialVersionUID = -8506894102933517235L;
 
@@ -16,7 +15,7 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
     private String course;
 
     @Embedded
-    private RunDuration runDuration = new RunDuration(0, 0, 0);
+    private ActivityDuration activityDuration = new ActivityDuration(0, 0, 0);
 
     @Column(name = "distance", nullable = false)
     private double distance;
@@ -35,37 +34,38 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
     private Integer avgHeartRate;
 
     @ManyToOne(optional = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "shoesid", nullable = true)
-    private Shoes shoes;
+    @JoinColumn(name = "gearid", nullable = true)
+    private Gear gear;
 
     @ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.LAZY)
     @JoinColumn(name = "userid", nullable = false)
     @JsonIgnore
     private User user;
 
-    Run(Date date, String course, double distance, RunDuration runDuration,
-               String weather, String comments, Integer avgHeartRate) {
+    @Enumerated(EnumType.STRING)
+    @Column(name = "activitytype", nullable = true)
+    private ActivityType activityType;
+
+    Activity(Date date, String course, double distance, ActivityDuration activityDuration,
+             String weather, String comments, Integer avgHeartRate, ActivityType activityType) {
         this.date = date;
         this.course = course;
         this.distance = distance;
-        this.runDuration = runDuration;
+        this.activityDuration = activityDuration;
         this.weather = weather;
         this.comments = comments;
         this.avgHeartRate = avgHeartRate;
+        this.activityType = activityType;
     }
 
-    public static Run build(Date date, String course, double distance, RunDuration runDuration,
-                            String weather, String comments, Integer avgHeartRate, User user) {
-        Run run = new Run(date, course, distance, runDuration, weather, comments, avgHeartRate);
-        run.setUser(user);
-        return run;
+    public static Activity build(Date date, String course, double distance, ActivityDuration activityDuration,
+                                 String weather, String comments, Integer avgHeartRate, User user, ActivityType activityType) {
+        Activity activity = new Activity(date, course, distance, activityDuration, weather, comments, avgHeartRate, activityType);
+        activity.setUser(user);
+        return activity;
     }
 
-    public static Run build(Date date, double distance, RunDuration runDuration, User user) {
-        return build(date, null, distance, runDuration, null, null, null, user);
-    }
-
-    protected Run() {
+    protected Activity() {
 
         //needed for JPA
     }
@@ -78,18 +78,18 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
         this.course = name;
     }
 
-    public RunDuration getRunDuration() {
-        if (runDuration == null) {
-            return new RunDuration(0, 0, 0);
+    public ActivityDuration getActivityDuration() {
+        if (activityDuration == null) {
+            return new ActivityDuration(0, 0, 0);
         }
-        return runDuration;
+        return activityDuration;
     }
 
-    public void setRunDuration(RunDuration runDuration) {
-        if (runDuration == null) {
-            runDuration = new RunDuration(0, 0, 0);
+    public void setActivityDuration(ActivityDuration activityDuration) {
+        if (activityDuration == null) {
+            activityDuration = new ActivityDuration(0, 0, 0);
         }
-        this.runDuration = runDuration;
+        this.activityDuration = activityDuration;
     }
 
     public double getDistance() {
@@ -108,12 +108,12 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
         this.comments = comments;
     }
 
-    public Shoes getShoes() {
-        return shoes;
+    public Gear getGear() {
+        return gear;
     }
 
-    public void setShoes(Shoes shoes) {
-        this.shoes = shoes;
+    public void setGear(Gear gear) {
+        this.gear = gear;
     }
 
     public String getWeather() {
@@ -149,10 +149,19 @@ public class Run extends AbstractPersistable<Long> implements UserResource {
         this.user = user;
     }
 
+    public ActivityType getActivityType() {
+        return activityType;
+    }
+
+    public void setActivityType(ActivityType activityType) {
+        this.activityType = activityType;
+    }
+
     @Override
     public String toString() {
-        return "Run{" + "id=" + getId() + ", course=" + course + ", runDuration=" + runDuration + ", distance=" + distance + ", comments="
-                + comments + ", weather=" + weather + ", date=" + date + ", avgHeartRate=" + avgHeartRate + ", shoes=" + shoes + ", user=" + user
+        return "Activity{" + "id=" + getId() + ", course=" + course + ", activityDuration=" + activityDuration + ", distance=" + distance + ", comments="
+                + comments + ", weather=" + weather + ", date=" + date + ", avgHeartRate=" + avgHeartRate + ", gear=" + gear + ", user="
+                + user + ", activityType=" + activityType
                 + '}';
     }
 
