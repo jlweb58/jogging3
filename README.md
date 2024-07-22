@@ -21,7 +21,15 @@ docker run --net=host -d --rm -e MYSQL_ROOT_PASSWORD=pw -e MYSQL_DATABASE=db  jl
 Run as docker image: 
 docker run --net=host --rm -e SPRING_PROFILE=localhost jogging 
 (if untagged)
-docker run --net=host -it -d --restart unless-stopped jlweb58/jlweb58-repo:jogging3-1.0.2
+docker run --net=host -it -d -e TZ="Europe/Berlin" --restart unless-stopped jlweb58/jlweb58-repo:jogging3-1.0.2
 (tagged version on production)
 
 If the profile is omitted, default is prod
+
+## Better way to run both DB and app with docker on localhost for testing:
+* docker network create mynetwork
+* application-localhost.yml: Datasource URL should be "jdbc:mysql://activitydb/jlweb"
+* docker run --name activitydb --network mynetwork -e MYSQL_ROOT_PASSWORD=xxx -e MYSQL_DATABASE=jlweb  jlweb58/jlweb58-repo:database_dump-latest
+* docker run -p9005:9005 --network mynetwork --rm -e SPRING_PROFILE=localhost jogging
+
+
