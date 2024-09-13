@@ -12,16 +12,19 @@ Angular 9
 ./gradlew bootJar
 
 docker build -t jogging:latest .
-docker tag jogging jlweb58/jlweb58-repo:jogging3-1.0.2
-docker push jlweb58/jlweb58-repo:jogging3-1.0.2
+docker tag jogging jlweb58/jlweb58-repo:jogging3-1.0.3
+docker push jlweb58/jlweb58-repo:jogging3-1.0.3
 
 Run the database locally (only works when the app runs in docker):
 docker run --net=host -d --rm -e MYSQL_ROOT_PASSWORD=pw -e MYSQL_DATABASE=db  jlweb58/jlweb58-repo:database_dump-latest
 
+# Build for production
+docker build -t jogging:latest . --platform linux/amd64
+
 Run as docker image: 
 docker run --net=host --rm -e SPRING_PROFILE=localhost jogging 
 (if untagged)
-docker run --net=host -it -d -e TZ="Europe/Berlin" --restart unless-stopped jlweb58/jlweb58-repo:jogging3-1.0.2
+docker run --net=host -it -d -e TZ="Europe/Berlin" --restart unless-stopped jlweb58/jlweb58-repo:jogging3-1.0.3
 (tagged version on production)
 
 If the profile is omitted, default is prod
