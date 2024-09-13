@@ -38,6 +38,10 @@ public class Gear extends AbstractPersistable<Long> implements UserResource {
     @Column(name = "preferred", nullable = false)
     private boolean preferred;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "geartype", nullable = true)
+    private GearType gearType;
+
     public Gear(String name, double mileageOffset, User user) {
         this.name = name;
         this.mileageOffset = mileageOffset;
@@ -103,10 +107,20 @@ public class Gear extends AbstractPersistable<Long> implements UserResource {
         this.preferred = preferred;
     }
 
+    public GearType getGearType() {
+        return gearType;
+    }
+
+    public void setGearType(GearType activityType) {
+        this.gearType = activityType;
+    }
+
+
+
     @Override
     public String toString() {
         return "Gear{" + "id=" + getId() + ", name=" + name + ", mileage=" + mileage + ", mileageOffset=" + mileageOffset + ", user=" + user
-                + ", active=" + active + ", preferred=" + preferred + '}';
+                + ", active=" + active + ", gearType=" + gearType + ", preferred=" + preferred + '}';
     }
 
 
