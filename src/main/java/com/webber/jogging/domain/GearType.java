@@ -2,5 +2,6 @@ package com.webber.jogging.domain;
 
 public enum GearType {
     BIKE,
-    SHOES;
+    SHOES,
+    NONE;
 }
