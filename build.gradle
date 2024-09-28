@@ -15,13 +15,13 @@ apply plugin: "org.springframework.boot"
 apply plugin: "io.spring.dependency-management"
 apply plugin: "application"
 
-wrapper { gradleVersion = "7.0" }
+wrapper { gradleVersion = "8.8" }
 
 
 
 compileJava {
-    sourceCompatibility = 11
-    targetCompatibility = 11
+    sourceCompatibility = 13
+    targetCompatibility = 13
 }
 
 
