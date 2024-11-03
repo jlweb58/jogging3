@@ -9,6 +9,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
@@ -18,25 +19,24 @@ public class StravaAuthentication {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "expirationDate", nullable = false)
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date expirationDate;
+    @Column(name = "expirationdate", nullable = false)
+    private LocalDateTime expirationDate;
 
-    public StravaAuthentication(String accessToken, String refreshToken, User user, Date expirationDate) {
+    public StravaAuthentication(String accessToken, String refreshToken, User user, LocalDateTime expirationDate) {
         this.accessToken = accessToken;
         this.refreshToken = refreshToken;
         this.user = user;
         this.expirationDate = expirationDate;
     }
 
-    @Column(name = "accessToken")
+    @Column(name = "accesstoken")
     private String accessToken;
 
-    @Column(name = "refreshToken")
+    @Column(name = "refreshtoken")
     private String refreshToken;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "userid")
     private User user;
 
     public StravaAuthentication() {
@@ -59,7 +59,7 @@ public class StravaAuthentication {
         this.id = id;
     }
 
-    public Date getExpirationDate() {
+    public LocalDateTime getExpirationDate() {
         return expirationDate;
     }
 
@@ -67,15 +67,30 @@ public class StravaAuthentication {
         return accessToken;
     }
 
-    public void setAccessToken(String accessToken) {
-        this.accessToken = accessToken;
-    }
-
     public String getRefreshToken() {
         return refreshToken;
     }
 
+    public void setExpirationDate(LocalDateTime expirationDate) {
+        this.expirationDate = expirationDate;
+    }
+
+    public void setAccessToken(String accessToken) {
+        this.accessToken = accessToken;
+    }
+
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
+    }
+
+    @Override
+    public String toString() {
+        return "StravaAuthentication{" +
+                "id=" + id +
+                ", expirationDate=" + expirationDate +
+                ", accessToken='" + accessToken + '\'' +
+                ", refreshToken='" + refreshToken + '\'' +
+                ", user=" + user +
+                '}';
     }
 }

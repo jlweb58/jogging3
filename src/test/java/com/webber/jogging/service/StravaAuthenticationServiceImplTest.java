@@ -7,12 +7,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.web.reactive.function.client.WebClient;
-import reactor.core.publisher.Mono;
 
 import javax.transaction.Transactional;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -32,7 +30,7 @@ public class StravaAuthenticationServiceImplTest {
     @Test
     public void testCreateAndFindByUser() {
         User user = userService.create(new User("test", "test", "test@test.com", true));
-        Date now = new Date();
+        LocalDateTime now = LocalDateTime.now();
         StravaAuthentication authentication = new StravaAuthentication("12345", "67890", user, now);
         authentication = service.create(authentication);
         assertNotNull(authentication);

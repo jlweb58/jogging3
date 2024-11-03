@@ -24,7 +24,7 @@ docker build -t jogging:latest . --platform linux/amd64
 Run as docker image: 
 docker run --net=host --rm -e SPRING_PROFILE=localhost jogging 
 (if untagged)
-docker run --net=host -it -d -e TZ="Europe/Berlin" --restart unless-stopped jlweb58/jlweb58-repo:jogging3-1.0.3
+docker run --net=host -it -d -e TZ="Europe/Berlin" --restart unless-stopped jlweb58/jlweb58-repo:jogging3-1.1.0
 (tagged version on production)
 
 If the profile is omitted, default is prod
