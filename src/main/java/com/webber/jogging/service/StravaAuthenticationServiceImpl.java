@@ -40,6 +40,7 @@ public class StravaAuthenticationServiceImpl implements StravaAuthenticationServ
     @Autowired
     private UserService userService;
 
+    //TODO - extract a StravaCommunicationService
 
     @Autowired
     public StravaAuthenticationServiceImpl(StravaAuthenticationRepository repository, WebClient.Builder webClientBuilder) {
@@ -48,6 +49,7 @@ public class StravaAuthenticationServiceImpl implements StravaAuthenticationServ
     }
 
 
+    // TODO - investigate whether this method is really needed
     @Override
     public StravaAuthentication obtainAccessToken(User user) {
         return webClient.post().uri(builder -> builder.path("/oauth/token")
@@ -107,6 +109,7 @@ public class StravaAuthenticationServiceImpl implements StravaAuthenticationServ
                         authentication.setAccessToken(accessToken);
                         authentication.setRefreshToken(refreshToken);
                         authentication.setExpirationDate(expirationDate);
+                        //TODO - change to create(authentication)
                         return repository.save(authentication);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
