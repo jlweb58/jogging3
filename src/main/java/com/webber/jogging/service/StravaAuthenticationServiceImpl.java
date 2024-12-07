@@ -107,6 +107,7 @@ public class StravaAuthenticationServiceImpl implements StravaAuthenticationServ
                         authentication.setAccessToken(accessToken);
                         authentication.setRefreshToken(refreshToken);
                         authentication.setExpirationDate(expirationDate);
+                        LOGGER.info("Refreshed authentication: " + authentication);
                         return repository.save(authentication);
                     } catch (Exception e) {
                         throw new RuntimeException(e);
