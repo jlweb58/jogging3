@@ -40,7 +40,6 @@ public class StravaAuthenticationServiceImpl implements StravaAuthenticationServ
     @Autowired
     private UserService userService;
 
-    //TODO - extract a StravaCommunicationService
 
     @Autowired
     public StravaAuthenticationServiceImpl(StravaAuthenticationRepository repository, WebClient.Builder webClientBuilder) {

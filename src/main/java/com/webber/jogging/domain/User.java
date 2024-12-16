@@ -1,18 +1,22 @@
 package com.webber.jogging.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import jakarta.persistence.*;
 
-import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Entity
-public class User extends AbstractPersistable<Long> {
+public class User {
 
     private static final long serialVersionUID = 3630469923395227112L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;
@@ -35,6 +39,10 @@ public class User extends AbstractPersistable<Long> {
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserRole> userRoles = new HashSet<>();
+
+    public Long getId() {
+        return id;
+    }
 
     protected User() {
         //Needed for Hibernate

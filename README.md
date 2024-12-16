@@ -12,8 +12,8 @@ Angular 9
 ./gradlew bootJar
 
 docker build -t jogging:latest .
-docker tag jogging jlweb58/jlweb58-repo:jogging3-1.0.3
-docker push jlweb58/jlweb58-repo:jogging3-1.0.3
+docker tag jogging jlweb58/jlweb58-repo:jogging3-1.1.0
+docker push jlweb58/jlweb58-repo:jogging3-1.1.0
 
 Run the database locally (only works when the app runs in docker):
 docker run --net=host -d --rm -e MYSQL_ROOT_PASSWORD=pw -e MYSQL_DATABASE=db  jlweb58/jlweb58-repo:database_dump-latest

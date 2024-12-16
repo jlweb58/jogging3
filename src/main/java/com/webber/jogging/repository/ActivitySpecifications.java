@@ -2,13 +2,13 @@ package com.webber.jogging.repository;
 
 import com.webber.jogging.domain.Activity;
 import com.webber.jogging.domain.ActivityFilter;
+import jakarta.persistence.criteria.CriteriaBuilder;
+import jakarta.persistence.criteria.CriteriaQuery;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.data.jpa.domain.Specification;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,6 +16,8 @@ public class ActivitySpecifications {
 
     public static Specification<Activity> forActivityFilter(ActivityFilter filter) {
         return new Specification<Activity>() {
+
+
             @Override
             public Predicate toPredicate(Root<Activity> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 List<Predicate> predicates = new ArrayList<>();

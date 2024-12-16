@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -18,6 +19,7 @@ import java.util.Collections;
 
 @SpringBootApplication
 @EnableScheduling
+@EntityScan
 public class Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
