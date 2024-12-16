@@ -1,14 +1,19 @@
 package com.webber.jogging.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.*;
 
 @Entity
-public class Gear extends AbstractPersistable<Long> implements UserResource {
+public class Gear implements UserResource {
 
     private static final long serialVersionUID = 2095849911820717778L;
+
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(name = "name", nullable = false)
     private String name;
@@ -56,6 +61,10 @@ public class Gear extends AbstractPersistable<Long> implements UserResource {
     protected Gear() {
 
         //for JPA
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public String getName() {

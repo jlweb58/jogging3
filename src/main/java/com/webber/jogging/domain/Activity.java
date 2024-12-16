@@ -7,9 +7,14 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
-public class Activity extends AbstractPersistable<Long> implements UserResource {
+public class Activity implements UserResource {
 
     private static final long serialVersionUID = -8506894102933517235L;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
+    private Long id;
 
     @Column(name = "course", nullable = true)
     private String course;
@@ -45,6 +50,10 @@ public class Activity extends AbstractPersistable<Long> implements UserResource 
     @Enumerated(EnumType.STRING)
     @Column(name = "activitytype", nullable = true)
     private ActivityType activityType;
+
+    public Long getId() {
+        return id;
+    }
 
     Activity(Date date, String course, double distance, ActivityDuration activityDuration,
              String weather, String comments, Integer avgHeartRate, ActivityType activityType) {
