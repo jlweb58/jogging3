@@ -1,4 +1,4 @@
-FROM adoptopenjdk/openjdk13:ubi
+FROM openjdk:17-oracle
 RUN mkdir /opt/app
 ENV SPRING_PROFILE=prod
 COPY build/libs/jogging3.jar /opt/app

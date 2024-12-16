@@ -3,7 +3,7 @@ package com.webber.jogging.domain;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class Gear extends AbstractPersistable<Long> implements UserResource {
