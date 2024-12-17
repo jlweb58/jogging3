@@ -4,8 +4,6 @@ import com.webber.jogging.repository.UserRepository;
 import com.webber.jogging.repository.UserRoleRepository;
 import com.webber.jogging.security.JwtUtils;
 import com.webber.jogging.security.UserDetailsImpl;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -45,8 +43,6 @@ public class AuthenticationController {
 
     @Autowired
     JwtUtils jwtUtils;
-
-    private static Logger LOG = LoggerFactory.getLogger(AuthenticationController.class);
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {

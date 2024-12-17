@@ -27,7 +27,7 @@ compileJava {
 
 // Define the main class for the application
 bootRun {
-    main = "com.webber.jogging.Application"
+    mainClass = "com.webber.jogging.Application"
     String activeProfile =  System.properties["spring.profiles.active"]
     systemProperty "spring.profiles.active", activeProfile
 }
@@ -65,7 +65,7 @@ dependencies {
     //Needed for JUnit5
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.1.1"
     testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.1.1"
-    testRuntimeOnly "com.h2database:h2:1.4.190"
+    testRuntimeOnly 'com.h2database:h2:2.2.220'
 
 }
 

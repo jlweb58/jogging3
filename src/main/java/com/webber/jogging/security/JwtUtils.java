@@ -9,7 +9,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
-import java.security.Key;
 import java.util.Date;
 import java.util.Map;
 import java.util.function.Function;
@@ -20,9 +19,6 @@ public class JwtUtils {
     private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
 
     private static final String SECRET_KEY = "404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970";
-
-    private static final Logger LOG = LoggerFactory.getLogger(JwtUtils.class);
-
 
     public String generateToken(
             Map<String, Object> extraClaims,
@@ -51,7 +47,6 @@ public class JwtUtils {
                 .parseClaimsJws(token)
                 .getBody();
     }
-
 
     public String getUserNameFromJwtToken(String token) {
         return extractClaim(token, Claims::getSubject);
