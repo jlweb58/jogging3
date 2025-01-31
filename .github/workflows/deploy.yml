@@ -40,7 +40,9 @@ jobs:
           echo "VERSION=$VERSION" >> $GITHUB_ENV
 
       - name: Build with Gradle
-        run: ./gradlew build -x test  # Remove -x test if you want to run tests
+        run: | 
+          ./gradlew bootJar -x test  # Remove -x test if you want to run tests
+          ls -al build/libs
 
       - name: Commit updated version
         run: |
