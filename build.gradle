@@ -82,3 +82,51 @@ repositories {
         url "https://repo.spring.io/libs-snapshot"
     }
 }
+
+def getVersionName = { ->
+    def versionFile = file('version.properties')
+    def props = new Properties()
+
+    if (versionFile.exists()) {
+        props.load(new FileInputStream(versionFile))
+    } else {
+        props['major'] = '1'
+        props['minor'] = '0'
+        props['patch'] = '0'
+        props['build'] = '0'
+    }
+
+    return "${props.major}.${props.minor}.${props.patch}-${props.build}"
+}
+
+def incrementVersion = { ->
+    def versionFile = file('version.properties')
+    def props = new Properties()
+
+    if (versionFile.exists()) {
+        props.load(new FileInputStream(versionFile))
+    } else {
+        props['major'] = '1'
+        props['minor'] = '0'
+        props['patch'] = '0'
+        props['build'] = '0'
+    }
+
+    // Increment build number
+    def build = props['build'] as int
+    props['build'] = (build + 1).toString()
+
+    // Save updated properties
+    def writer = new FileWriter(versionFile)
+    props.store(writer, null)
+
+    return "${props.major}.${props.minor}.${props.patch}-${props.build}"
+}
+
+// Only increment version when running in CI environment
+if (System.getenv('CI')) {
+    version = incrementVersion()
+} else {
+    version = getVersionName()
+}
+
