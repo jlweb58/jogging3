@@ -7,5 +7,5 @@ ARG DB_USERNAME
 ARG DB_PASSWORD
 ENV SPRING_DATASOURCE_USERNAME=${DB_USERNAME}
 ENV SPRING_DATASOURCE_PASSWORD=${DB_PASSWORD}
-COPY build/libs/jogging3.jar /opt/app
+COPY build/libs/jogging3-*.jar /opt/app
 ENTRYPOINT ["java", "-Dspring.profiles.active=${SPRING_PROFILE}", "-jar", "/opt/app/jogging3.jar"]
