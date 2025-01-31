@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        springBootVersion = "2.7.2"
+        springBootVersion = "3.4.0"
     }
     repositories {
         mavenCentral()
@@ -20,8 +20,8 @@ wrapper { gradleVersion = "8.8" }
 
 
 compileJava {
-    sourceCompatibility = 13
-    targetCompatibility = 13
+    sourceCompatibility = 17
+    targetCompatibility = 17
 }
 
 
@@ -44,24 +44,23 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}"
-    implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-webflux"
 
     implementation "org.mariadb.jdbc:mariadb-java-client:2.1.2"
-    implementation "io.jsonwebtoken:jjwt:0.9.1"
+    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
+    implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
+    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
 
-    implementation "org.apache.commons:commons-lang3:3.9"
-    implementation "commons-io:commons-io:2.8.0"
-    implementation "com.fasterxml.jackson.core:jackson-core:2.10.3"
-    implementation "com.fasterxml.jackson.core:jackson-databind:2.10.3"
-    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.10.3"
+    implementation "org.apache.commons:commons-lang3:3.17.0"
+    implementation "commons-io:commons-io:2.18.0"
+    implementation "com.fasterxml.jackson.core:jackson-core:2.18.2"
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.18.2"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2"
     implementation "javax.validation:validation-api:2.0.1.Final"
 
     implementation "org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}"
     testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
-
-    compileOnly "javax.persistence:javax.persistence-api:2.2"
 
     //Needed for JUnit5
     testImplementation "org.junit.jupiter:junit-jupiter-api:5.1.1"
