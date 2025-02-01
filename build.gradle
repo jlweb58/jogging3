@@ -17,6 +17,15 @@ apply plugin: "application"
 
 wrapper { gradleVersion = "8.8" }
 
+group = "com.webber"
+version = "0.1.2"
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(17)
+	}
+}
+
 
 
 compileJava {
@@ -32,10 +41,6 @@ bootRun {
     systemProperty "spring.profiles.active", activeProfile
 }
 
-test {
-    useJUnitPlatform()
-}
-
 application {
     mainClassName =  "com.webber.jogging.Application"
 }
@@ -45,42 +50,40 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
-    implementation "org.springframework.boot:spring-boot-starter-webflux"
-
-    implementation "org.mariadb.jdbc:mariadb-java-client:2.1.2"
-    implementation 'io.jsonwebtoken:jjwt-api:0.12.3'
-    implementation 'io.jsonwebtoken:jjwt-impl:0.12.3'
-    implementation 'io.jsonwebtoken:jjwt-jackson:0.12.3'
+	implementation "org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-mail:${springBootVersion}"
+	implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}"
+	implementation "org.springframework.cloud:spring-cloud-context:4.1.1"
+	implementation "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
+	implementation "io.jsonwebtoken:jjwt-api:0.12.3"
+	implementation "io.jsonwebtoken:jjwt-impl:0.12.3"
+	implementation "io.jsonwebtoken:jjwt-jackson:0.12.3"
+	implementation "jakarta.validation:jakarta.validation-api:3.0.1"
 
     implementation "org.apache.commons:commons-lang3:3.17.0"
     implementation "commons-io:commons-io:2.18.0"
     implementation "com.fasterxml.jackson.core:jackson-core:2.18.2"
     implementation "com.fasterxml.jackson.core:jackson-databind:2.18.2"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2"
-    implementation "javax.validation:validation-api:2.0.1.Final"
 
-    implementation "org.springframework.boot:spring-boot-starter-log4j2:${springBootVersion}"
-    testImplementation "org.springframework.boot:spring-boot-starter-test:${springBootVersion}"
-
-    //Needed for JUnit5
-    testImplementation "org.junit.jupiter:junit-jupiter-api:5.1.1"
-    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.1.1"
-    testRuntimeOnly "com.h2database:h2:1.4.190"
+    runtimeOnly "org.mariadb.jdbc:mariadb-java-client"
+	testImplementation "org.springframework.boot:spring-boot-starter-test"
+	testImplementation "org.springframework.security:spring-security-test"
+    testImplementation "org.junit.jupiter:junit-jupiter-api"
+    testImplementation "org.mockito:mockito-core"
+    testImplementation "org.mockito:mockito-junit-jupiter"
+    testRuntimeOnly "org.junit.platform:junit-platform-launcher"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine"
+    testRuntimeOnly "com.h2database:h2"
 
 }
 
-configurations {
-    all {
-        exclude group: "org.springframework.boot", module: "spring-boot-starter-logging"
-    }
+tasks.named("test") {
+	useJUnitPlatform()
 }
 
 repositories {
-    // You can declare any Maven/Ivy/file repository here.
-    jcenter()
-    maven {
-        url "https://repo.spring.io/libs-snapshot"
-    }
+    mavenCentral()
 }
 
 def getVersionName = { ->

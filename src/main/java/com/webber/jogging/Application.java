@@ -19,7 +19,7 @@ import java.util.Collections;
 
 @SpringBootApplication
 @EnableScheduling
-@EntityScan
+@EntityScan(basePackages = "com.webber.jogging")
 public class Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 

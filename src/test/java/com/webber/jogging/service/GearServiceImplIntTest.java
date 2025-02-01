@@ -2,17 +2,16 @@ package com.webber.jogging.service;
 
 import com.webber.jogging.Application;
 import com.webber.jogging.domain.*;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import javax.transaction.Transactional;
 import java.util.Date;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-
 
 @ActiveProfiles("test")
 @SpringBootTest(classes = Application.class)

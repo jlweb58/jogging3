@@ -43,24 +43,20 @@ public final class GpxTrackParser {
         for (int i = 0; i < trkPtList.getLength(); i++) {
             Element trkPt = (Element)trkPtList.item(i);
             GpxTrackElement gpxTrackElement = getGpxTrackElement(trkPt);
-
-
             trackElementList.add(gpxTrackElement);
         }
-
         return trackElementList;
     }
 
     private GpxTrackElement getGpxTrackElement(Element trkPt) {
-        GpxTrackElement gpxTrackElement = new GpxTrackElement();
-        gpxTrackElement.setLatitude(Double.parseDouble(trkPt.getAttribute(LAT)));
-        gpxTrackElement.setLongitude(Double.parseDouble(trkPt.getAttribute(LON)));
-        Element elevation = (Element) trkPt.getElementsByTagName(ELE).item(0);
-        gpxTrackElement.setElevation(Double.parseDouble(elevation.getTextContent()));
-        Element timestamp = (Element) trkPt.getElementsByTagName(TIME).item(0);
-        gpxTrackElement.setTimestamp(Instant.parse(timestamp.getTextContent()));
-        gpxTrackElement.setHeartRate(getHeartRate((Element) trkPt.getElementsByTagName(EXTENSIONS).item(0)));
-        return gpxTrackElement;
+        double latitude = Double.parseDouble(trkPt.getAttribute(LAT));
+        double longitude = Double.parseDouble(trkPt.getAttribute(LON));
+        Element elevationElement = (Element) trkPt.getElementsByTagName(ELE).item(0);
+        double elevation = Double.parseDouble(elevationElement.getTextContent());
+        Element timestampElement = (Element) trkPt.getElementsByTagName(TIME).item(0);
+        Instant timestamp = (Instant.parse(timestampElement.getTextContent()));
+        int heartRate = getHeartRate((Element) trkPt.getElementsByTagName(EXTENSIONS).item(0));
+        return new GpxTrackElement(latitude, longitude, elevation, heartRate, timestamp);
     }
 
     private int getHeartRate(Element extensions) {

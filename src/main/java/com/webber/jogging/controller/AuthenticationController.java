@@ -4,6 +4,7 @@ import com.webber.jogging.repository.UserRepository;
 import com.webber.jogging.repository.UserRoleRepository;
 import com.webber.jogging.security.JwtUtils;
 import com.webber.jogging.security.UserDetailsImpl;
+import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
