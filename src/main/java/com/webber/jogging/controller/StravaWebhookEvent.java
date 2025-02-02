@@ -1,13 +1,14 @@
 package com.webber.jogging.controller;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
-record StravaWebhookEvent (
-     String aspectType,
-    String objectType,
-    Long objectId,
-    Long ownerId,
-    List<String> updates,
-    String authorization
+public record StravaWebhookEvent (@JsonProperty("aspect_type") String aspectType,
+    @JsonProperty("event_time") Long eventTime,
+    @JsonProperty("object_type") String objectType,
+    @JsonProperty("object_id") Long objectId,
+    @JsonProperty("owner_id") Long ownerId,
+    @JsonProperty("updates") List<String> updates
 ) {}
 
