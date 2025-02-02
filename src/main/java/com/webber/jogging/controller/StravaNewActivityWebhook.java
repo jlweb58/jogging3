@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/strava-api")
+@RequestMapping("/jogging/strava-api")
 public class StravaNewActivityWebhook {
 
     private static final Logger LOG = LoggerFactory.getLogger(StravaNewActivityWebhook.class);
