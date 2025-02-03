@@ -126,4 +126,10 @@ public class StravaAuthenticationServiceImpl implements StravaAuthenticationServ
     public StravaAuthentication create(StravaAuthentication authentication) {
         return repository.save(authentication);
     }
+
+    @Override
+    public StravaAuthentication getDefaultToken() {
+        User defaultSystemUser = userService.find(DEFAULT_USER);
+        return findByUser(defaultSystemUser);
+    }
 }

@@ -16,16 +16,16 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 @Service
-public class StravaActivityFileParsingService {
+public class StravaActivityJsonParsingService {
 
     private final ObjectMapper objectMapper;
 
-    public StravaActivityFileParsingService(ObjectMapper objectMapper) {
+    public StravaActivityJsonParsingService(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
 
-    public ParsedGpxTrack parseActivityFile(String jsonContent, Instant activityStartTime) throws IOException {
+    public ParsedGpxTrack parseActivityJson(String jsonContent, Instant activityStartTime) throws IOException {
         ActivityData activityData = parseToActivityData(jsonContent, activityStartTime);
 
         return convertToGpxTrack(activityData);
@@ -33,13 +33,11 @@ public class StravaActivityFileParsingService {
 
 
     private ActivityData parseToActivityData(String jsonContent, Instant startTime) throws IOException {
-        // Previous parsing code remains the same
         List<ActivityDataArray> rawData = objectMapper.readValue(
                 jsonContent,
                 new TypeReference<List<ActivityDataArray>>() {}
         );
 
-        // Initialize containers for each data type
         List<double[]> coordinates = null;
         List<Double> distances = new ArrayList<>();
         List<Double> altitudes = new ArrayList<>();

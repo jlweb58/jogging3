@@ -31,10 +31,10 @@ public class GpxTrackCreatorIntTest {
         String jsonContent = new String(resource.getInputStream().readAllBytes());
         Instant startTime = Instant.parse("2024-02-01T10:00:00Z"); // Use a fixed time for testing
 
-        StravaActivityFileParsingService service = new StravaActivityFileParsingService(new ObjectMapper());
+        StravaActivityJsonParsingService service = new StravaActivityJsonParsingService(new ObjectMapper());
 
         // When
-        ParsedGpxTrack gpxTrack = service.parseActivityFile(jsonContent, startTime);
+        ParsedGpxTrack gpxTrack = service.parseActivityJson(jsonContent, startTime);
 
         // Then
         assertNotNull(gpxTrack);
