@@ -1,7 +1,7 @@
 package com.webber.jogging.activity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.webber.jogging.domain.Gear;
+import com.webber.jogging.gear.Gear;
 import com.webber.jogging.domain.User;
 import com.webber.jogging.domain.UserResource;
 

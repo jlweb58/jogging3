@@ -2,7 +2,7 @@ package com.webber.jogging.activity;
 
 import com.webber.jogging.Application;
 import com.webber.jogging.domain.*;
-import com.webber.jogging.service.GearService;
+import com.webber.jogging.gear.GearService;
 import com.webber.jogging.service.UserService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;

@@ -2,6 +2,7 @@ package com.webber.jogging.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.webber.jogging.activity.Activity;
+import com.webber.jogging.gear.Gear;
 import jakarta.persistence.*;
 
 import java.util.ArrayList;

@@ -1,8 +1,6 @@
-package com.webber.jogging.service;
+package com.webber.jogging.gear;
 
-import com.webber.jogging.domain.Gear;
 import com.webber.jogging.domain.User;
-import com.webber.jogging.repository.GearRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

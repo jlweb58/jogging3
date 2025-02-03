@@ -1,8 +1,7 @@
-package com.webber.jogging.controller;
+package com.webber.jogging.gear;
 
-import com.webber.jogging.domain.Gear;
+import com.webber.jogging.controller.UserNotFoundException;
 import com.webber.jogging.domain.User;
-import com.webber.jogging.service.GearService;
 import com.webber.jogging.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
