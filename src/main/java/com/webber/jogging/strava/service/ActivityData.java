@@ -1,9 +1,14 @@
-package com.webber.jogging.strava;
+package com.webber.jogging.strava.service;
 
 import java.time.Instant;
 import java.util.List;
 
-public class ActivityData {
+/**
+ * This class is internal to the StravaActivityJsonParsingService, representing the complete
+ * data from a Strava activity as extracted from the Strava streaming API, allowing further processing
+ * to a ParsedGpxTrack
+ */
+class ActivityData {
 
     private List<double[]> coordinates;
 

@@ -5,8 +5,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webber.jogging.domain.GpxTrackElement;
 import com.webber.jogging.domain.ParsedGpxTrack;
-import com.webber.jogging.strava.ActivityData;
-import com.webber.jogging.strava.ActivityDataArray;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -35,7 +33,8 @@ public class StravaActivityJsonParsingService {
     private ActivityData parseToActivityData(String jsonContent, Instant startTime) throws IOException {
         List<ActivityDataArray> rawData = objectMapper.readValue(
                 jsonContent,
-                new TypeReference<List<ActivityDataArray>>() {}
+                new TypeReference<>() {
+                }
         );
 
         List<double[]> coordinates = null;

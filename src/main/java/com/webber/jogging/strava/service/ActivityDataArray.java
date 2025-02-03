@@ -1,9 +1,14 @@
-package com.webber.jogging.strava;
+package com.webber.jogging.strava.service;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
-public class ActivityDataArray {
+/**
+ * This class is internal to the StravaActivityJsonParsingService, enabling easy mapping
+ * of the JSON returned from the Strava endpoint {{strava_base_url}}/activities/12698372237/streams?keys=latlng,time,altitude,heartrate
+ * to a Java type for further processing
+ */
+class ActivityDataArray {
     @JsonProperty("type")
     private String type;
 
