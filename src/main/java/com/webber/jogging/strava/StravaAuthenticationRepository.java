@@ -1,6 +1,5 @@
-package com.webber.jogging.repository;
+package com.webber.jogging.strava;
 
-import com.webber.jogging.domain.StravaAuthentication;
 import com.webber.jogging.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,4 +1,4 @@
-package com.webber.jogging.domain;
+package com.webber.jogging.strava;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;

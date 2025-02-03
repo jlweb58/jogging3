@@ -1,4 +1,4 @@
-package com.webber.jogging.service;
+package com.webber.jogging.strava.service;
 
 public interface StravaActivityService {
 

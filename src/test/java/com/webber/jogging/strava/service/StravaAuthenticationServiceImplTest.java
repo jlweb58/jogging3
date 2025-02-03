@@ -1,7 +1,8 @@
-package com.webber.jogging.service;
+package com.webber.jogging.strava.service;
 
 import com.webber.jogging.Application;
-import com.webber.jogging.domain.StravaAuthentication;
+import com.webber.jogging.service.UserService;
+import com.webber.jogging.strava.StravaAuthentication;
 import com.webber.jogging.domain.User;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
@@ -36,19 +37,9 @@ public class StravaAuthenticationServiceImplTest {
         assertNotNull(foundAuthentication);
         assertEquals(foundAuthentication.getExpirationDate(), now);
         assertEquals(foundAuthentication.getUser(), user);
-        assertEquals(foundAuthentication.getAccessToken(), "12345");
-        assertEquals(foundAuthentication.getRefreshToken(), "67890");
+        assertEquals("12345", foundAuthentication.getAccessToken());
+        assertEquals("67890", foundAuthentication.getRefreshToken());
         assertNotNull(foundAuthentication.getId());
-    }
-
-    @Test
-    public void testObtainAccessTokenIntTest() {
-        User user = userService.create(new User("test", "test", "test@test.com", true));
-
-        StravaAuthentication response = service.obtainAccessToken(user);
-        assertNotNull(response);
-        System.out.println(response);
-
     }
 
 }

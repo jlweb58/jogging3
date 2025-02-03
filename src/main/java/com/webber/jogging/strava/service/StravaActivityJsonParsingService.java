@@ -1,12 +1,12 @@
-package com.webber.jogging.service;
+package com.webber.jogging.strava.service;
 
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.webber.jogging.domain.ActivityData;
-import com.webber.jogging.domain.ActivityDataArray;
 import com.webber.jogging.domain.GpxTrackElement;
 import com.webber.jogging.domain.ParsedGpxTrack;
+import com.webber.jogging.strava.ActivityData;
+import com.webber.jogging.strava.ActivityDataArray;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

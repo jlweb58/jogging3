@@ -1,4 +1,4 @@
-package com.webber.jogging.controller;
+package com.webber.jogging.strava;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webber.jogging.Application;
 import com.webber.jogging.domain.GpxTrackElement;
 import com.webber.jogging.domain.ParsedGpxTrack;
+import com.webber.jogging.strava.service.StravaActivityJsonParsingService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

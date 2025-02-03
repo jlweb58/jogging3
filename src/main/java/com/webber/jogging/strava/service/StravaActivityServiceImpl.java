@@ -1,4 +1,4 @@
-package com.webber.jogging.service;
+package com.webber.jogging.strava.service;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
