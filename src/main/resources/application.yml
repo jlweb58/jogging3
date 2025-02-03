@@ -3,6 +3,7 @@ spring:
     name: jogging
   datasource:
     driverClassName: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://127.0.0.1/jlweb
   jpa:
     database-platform: org.hibernate.dialect.MySQLDialect
 server:

@@ -1,0 +1,112 @@
+name: Deploy Spring Boot Application
+
+on:
+  push:
+    branches: [ "main" ]  # or your default branch
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+env:
+  DOCKER_IMAGE_NAME: jlweb58/jogging3
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    env:
+      CI: true
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          token: ${{ secrets.GH_PAT }}
+          fetch-depth: 0
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'  # Update this to match your project's Java version
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/gradle-build-action@v2
+
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      - name: Get Version
+        run: |
+          VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
+          echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+      - name: Build with Gradle
+        run: | 
+          ./gradlew bootJar -x test  # Remove -x test if you want to run tests
+          ls -al build/libs
+
+      - name: Commit updated version
+        run: |
+          git config --global user.name 'GitHub Actions'
+          git config --global user.email 'github-actions@users.noreply.github.com'
+          git add version.properties
+          git commit -m "Bump build number [skip ci]" || echo "No changes to commit"
+          git push origin HEAD:main
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          build-args: |
+            VERSION=${{ env.VERSION }}
+            DB_USERNAME=${{ secrets.DB_USERNAME }}
+            DB_PASSWORD=${{ secrets.DB_PASSWORD }}
+          tags: |
+            ${{ env.DOCKER_IMAGE_NAME }}:latest
+            ${{ env.DOCKER_IMAGE_NAME }}:${{ env.VERSION }}
+
+      - name: Deploy to Server
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SERVER_HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            # Pull the latest image
+            docker pull ${{ env.DOCKER_IMAGE_NAME }}:${{ env.VERSION }}
+            
+            # Stop and remove the old container if it exists
+            docker stop jogging3 || true
+            docker rm jogging3 || true
+            
+            # Run the new container
+            docker run --net=host -d \
+            --name jogging3 \
+            -e TZ="Europe/Berlin" \
+            --restart unless-stopped \
+              ${{ env.DOCKER_IMAGE_NAME }}:${{ env.VERSION }} \
+            /bin/sh -c "env && exec java -Dspring.profiles.active=production -jar /opt/app/jogging3.jar"
+
+      - name: Send deployment status email
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: ${{ job.status == 'success' && '✅ Activity server Deployment Successful' || '❌ Activity server Deployment Failed' }}
+          to: ${{ secrets.EMAIL_TO }}
+          from: GitHub Actions
+          body: |
+            Deployment Status: ${{ job.status }}
+
+            Branch: ${{ github.ref_name }}
+            Commit: ${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }}
+            ${{ job.status != 'success' && format('Workflow run: {0}/{1}/actions/runs/{2}', github.server_url, github.repository, github.run_id) || '' }}

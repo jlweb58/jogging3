@@ -3,12 +3,11 @@ package com.webber.jogging.service;
 import com.webber.jogging.Application;
 import com.webber.jogging.domain.StravaAuthentication;
 import com.webber.jogging.domain.User;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
-
-import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -18,7 +17,6 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ActiveProfiles("test")
 @SpringBootTest(classes = Application.class)
 @Transactional
-
 public class StravaAuthenticationServiceImplTest {
 
     @Autowired

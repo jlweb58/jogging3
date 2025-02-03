@@ -32,10 +32,10 @@ public class GpxTrackParserTest {
     }
 
     private void assertTrackElementCorrect(GpxTrackElement trackElement, double expectedLongitude, double expectedLatitude, double expectedElevation, int expectedHeartrate, Instant expectedTimestamp) {
-        assertEquals(expectedLongitude, trackElement.getLongitude());
-        assertEquals(expectedLatitude, trackElement.getLatitude());
-        assertEquals(expectedElevation, trackElement.getElevation());
-        assertEquals(expectedHeartrate, trackElement.getHeartRate());
-        assertEquals(expectedTimestamp, trackElement.getTimestamp());
+        assertEquals(expectedLongitude, trackElement.longitude());
+        assertEquals(expectedLatitude, trackElement.latitude());
+        assertEquals(expectedElevation, trackElement.elevation());
+        assertEquals(expectedHeartrate, trackElement.heartRate());
+        assertEquals(expectedTimestamp, trackElement.timestamp());
     }
 }
