@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Map;
 
-public record StravaWebhookEvent (@JsonProperty("aspect_type") String aspectType,
+public record StravaWebhookEvent (
+        @JsonProperty("aspect_type") String aspectType,
     @JsonProperty("event_time") Long eventTime,
     @JsonProperty("object_type") String objectType,
     @JsonProperty("object_id") Long objectId,
