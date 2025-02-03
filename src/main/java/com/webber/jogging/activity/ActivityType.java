@@ -5,6 +5,16 @@ public enum ActivityType {
     BIKE,
     SWIM,
     HIKE,
-    OTHER
+    OTHER;
+
+    public static ActivityType fromStravaTypeString(String stravaTypeString) {
+        return switch (stravaTypeString) {
+            case "Run" -> RUN;
+            case "Bike" -> BIKE;
+            case "Swim" -> SWIM;
+            case "Hike" -> HIKE;
+            default -> OTHER;
+        };
+    }
 
 }

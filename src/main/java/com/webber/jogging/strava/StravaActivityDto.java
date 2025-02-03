@@ -8,7 +8,9 @@ public record StravaActivityDto(
         String type,
         Double distance,
         @JsonProperty("average_heartrate")
-        Double averageHeartDate,
+        Double averageHeartRate,
         @JsonProperty("start_date_local")
-        String startDateLocal
+        String startDateLocal,
+        @JsonProperty("moving_time")
+        Long movingTime
 ) { }

@@ -1,24 +1,24 @@
 package com.webber.jogging.strava.service;
 
+import com.webber.jogging.activity.ActivityService;
 import com.webber.jogging.strava.StravaActivityDto;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.webber.jogging.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @Service
+@Slf4j
 public class StravaActivityServiceImpl implements StravaActivityService {
 
     private static final String STRAVA_API_BASE_URL = "https://www.strava.com/api/v3";
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(StravaActivityServiceImpl.class);
 
     private final StravaAuthenticationService stravaAuthenticationService;
 
     private final WebClient webClient;
 
-    public StravaActivityServiceImpl(StravaAuthenticationService stravaAuthenticationService, WebClient.Builder webClientBuilder) {
+    public StravaActivityServiceImpl(StravaAuthenticationService stravaAuthenticationService, UserService userService, ActivityService activityService, WebClient.Builder webClientBuilder) {
         this.stravaAuthenticationService = stravaAuthenticationService;
         this.webClient = webClientBuilder.baseUrl(STRAVA_API_BASE_URL).build();
     }
@@ -30,12 +30,13 @@ public class StravaActivityServiceImpl implements StravaActivityService {
                 .headers(headers -> headers.setBearerAuth(stravaAuthenticationService.getDefaultToken().getAccessToken()))
                 .retrieve()
                 .bodyToMono(StravaActivityDto.class)
-                .doOnSuccess(activity -> LOGGER.info("Fetched activity: {} ({}) - {} meters, started at {}",
+                .doOnSuccess(activity -> log.info("Fetched activity: {} ({}) - {} meters, started at {}",
                         activity.name(),
                         activity.type(),
                         activity.distance(),
                         activity.startDateLocal()))
-                .doOnError(throwable -> LOGGER.error("Error fetching activity: {}: {}", activityId, throwable.getMessage()))
+                .doOnError(throwable -> log.error("Error fetching activity: {}: {}", activityId, throwable.getMessage()))
                 ;
     }
+
 }

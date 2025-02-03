@@ -50,6 +50,10 @@ public class ActivityDuration implements Serializable {
         //For serialization
     }
 
+    public static ActivityDuration fromSeconds(long seconds) {
+        return new ActivityDuration((int) (seconds / 3600), (int) ((seconds % 3600) / 60), (int) (seconds % 60));
+    }
+
     private static void rangeCheck(int arg, int max, String name) {
         if (arg < 0 || arg > max) {
             throw new IllegalArgumentException(name + ": " + arg);

@@ -1,27 +1,20 @@
 package com.webber.jogging.strava;
 
 
-import com.webber.jogging.strava.service.StravaActivityService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import com.webber.jogging.strava.service.StravaWebhookHandler;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@Slf4j
 @RequestMapping("/jogging/strava-api")
 public class StravaActivityWebhookController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StravaActivityWebhookController.class);
+    private final StravaWebhookHandler webhookHandler;
 
-    private final StravaActivityService stravaActivityService;
-
-    public StravaActivityWebhookController(StravaActivityService stravaActivityService) {
-        this.stravaActivityService = stravaActivityService;
+    public StravaActivityWebhookController(StravaWebhookHandler webhookHandler) {
+        this.webhookHandler = webhookHandler;
     }
 
     @GetMapping
@@ -29,8 +22,7 @@ public class StravaActivityWebhookController {
             @RequestParam("hub.mode") String mode,
             @RequestParam("hub.challenge") String challenge,
             @RequestParam("hub.verify_token") String verifyToken) {
-
-        LOG.info("Received webhook validation request. Mode: {}, Challenge: {}, Token: {}", mode, challenge, verifyToken);
+        log.info("Received webhook validation request. Mode: {}, Challenge: {}, Token: {}", mode, challenge, verifyToken);
 
         // Verify the mode and token if needed
         if (!"subscribe".equals(mode)) {
@@ -43,20 +35,9 @@ public class StravaActivityWebhookController {
 
     @PostMapping
     public ResponseEntity<Void> handleWebhookEvent(@RequestBody StravaWebhookEvent event) {
-        LOG.info("Received webhook event. Type: {}, Object Type: {}, Object ID: {}, Owner ID: {}",
+        log.info("Received webhook event. Type: {}, Object Type: {}, Object ID: {}, Owner ID: {}",
                 event.aspectType(), event.objectType(), event.objectId(), event.ownerId());
-        if ("activity".equals(event.objectType())) {
-            stravaActivityService.getActivity(event.objectId())
-                    .subscribe(
-                            activity -> {
-                                LOG.info("Processing activity: {}", activity.name());
-                            },
-                            error -> {
-                                LOG.error("Error processing activity: {}", error.getMessage());
-                            }
-                    );
-
-        }
+        webhookHandler.handleActivityCreated(event);
         return ResponseEntity.ok().build();
     }
 }

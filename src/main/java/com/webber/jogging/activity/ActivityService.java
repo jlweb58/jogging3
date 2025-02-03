@@ -1,5 +1,6 @@
 package com.webber.jogging.activity;
 
+import com.webber.jogging.strava.StravaActivityDto;
 import com.webber.jogging.user.User;
 
 import java.util.Date;
@@ -62,4 +63,5 @@ public interface ActivityService {
      */
     double getDistanceForDateRange(Date startDate, Date endDate, User user);
 
+    void processNewActivity(StravaActivityDto activityDto);
 }
