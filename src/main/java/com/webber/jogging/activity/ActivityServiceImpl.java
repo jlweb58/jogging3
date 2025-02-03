@@ -1,10 +1,6 @@
-package com.webber.jogging.service;
+package com.webber.jogging.activity;
 
-import com.webber.jogging.domain.Activity;
-import com.webber.jogging.domain.ActivityFilter;
 import com.webber.jogging.domain.User;
-import com.webber.jogging.repository.ActivityRepository;
-import com.webber.jogging.repository.ActivitySpecifications;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

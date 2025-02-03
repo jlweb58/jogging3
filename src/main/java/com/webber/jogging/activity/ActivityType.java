@@ -1,4 +1,4 @@
-package com.webber.jogging.domain;
+package com.webber.jogging.activity;
 
 public enum ActivityType {
     RUN,

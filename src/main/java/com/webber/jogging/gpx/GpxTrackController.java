@@ -1,11 +1,8 @@
-package com.webber.jogging.controller;
+package com.webber.jogging.gpx;
 
-import com.webber.jogging.domain.Activity;
-import com.webber.jogging.domain.GpxTrack;
-import com.webber.jogging.domain.ParsedGpxTrack;
+import com.webber.jogging.activity.Activity;
 import com.webber.jogging.domain.User;
-import com.webber.jogging.service.GpxTrackService;
-import com.webber.jogging.service.ActivityService;
+import com.webber.jogging.activity.ActivityService;
 import com.webber.jogging.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

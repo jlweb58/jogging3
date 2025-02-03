@@ -1,7 +1,5 @@
-package com.webber.jogging.service;
+package com.webber.jogging.gpx;
 
-import com.webber.jogging.domain.ParsedGpxTrack;
-import com.webber.jogging.domain.GpxTrackElement;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

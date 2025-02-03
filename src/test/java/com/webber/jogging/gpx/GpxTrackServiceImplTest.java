@@ -1,7 +1,12 @@
-package com.webber.jogging.service;
+package com.webber.jogging.gpx;
 
 import com.webber.jogging.Application;
+import com.webber.jogging.activity.Activity;
+import com.webber.jogging.activity.ActivityDuration;
+import com.webber.jogging.activity.ActivityType;
 import com.webber.jogging.domain.*;
+import com.webber.jogging.activity.ActivityService;
+import com.webber.jogging.service.UserService;
 import jakarta.transaction.Transactional;
 import org.apache.commons.io.IOUtils;
 import org.junit.jupiter.api.BeforeEach;

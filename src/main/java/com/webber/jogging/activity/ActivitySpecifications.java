@@ -1,7 +1,5 @@
-package com.webber.jogging.repository;
+package com.webber.jogging.activity;
 
-import com.webber.jogging.domain.Activity;
-import com.webber.jogging.domain.ActivityFilter;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

@@ -1,6 +1,5 @@
-package com.webber.jogging.repository;
+package com.webber.jogging.gpx;
 
-import com.webber.jogging.domain.GpxTrack;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GpxTrackRepository extends JpaRepository<GpxTrack, Long> {

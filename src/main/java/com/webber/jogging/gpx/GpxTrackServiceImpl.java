@@ -1,8 +1,5 @@
-package com.webber.jogging.service;
+package com.webber.jogging.gpx;
 
-import com.webber.jogging.domain.GpxTrack;
-import com.webber.jogging.domain.ParsedGpxTrack;
-import com.webber.jogging.repository.GpxTrackRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

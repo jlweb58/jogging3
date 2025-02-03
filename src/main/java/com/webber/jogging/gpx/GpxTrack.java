@@ -1,7 +1,10 @@
-package com.webber.jogging.domain;
+package com.webber.jogging.gpx;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import com.webber.jogging.activity.Activity;
+import com.webber.jogging.domain.User;
+import com.webber.jogging.domain.UserResource;
 import jakarta.persistence.*;
 
 @Entity

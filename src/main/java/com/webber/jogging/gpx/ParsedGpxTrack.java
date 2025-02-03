@@ -1,4 +1,4 @@
-package com.webber.jogging.domain;
+package com.webber.jogging.gpx;
 
 import java.util.Collections;
 import java.util.List;

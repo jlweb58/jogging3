@@ -3,8 +3,8 @@ package com.webber.jogging.strava.service;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.webber.jogging.domain.GpxTrackElement;
-import com.webber.jogging.domain.ParsedGpxTrack;
+import com.webber.jogging.gpx.GpxTrackElement;
+import com.webber.jogging.gpx.ParsedGpxTrack;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;

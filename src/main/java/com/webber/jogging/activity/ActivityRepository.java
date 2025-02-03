@@ -1,6 +1,5 @@
-package com.webber.jogging.repository;
+package com.webber.jogging.activity;
 
-import com.webber.jogging.domain.Activity;
 import com.webber.jogging.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;

@@ -1,4 +1,6 @@
-package com.webber.jogging.domain;
+package com.webber.jogging.activity;
+
+import com.webber.jogging.domain.User;
 
 import java.io.Serializable;
 import java.util.Date;

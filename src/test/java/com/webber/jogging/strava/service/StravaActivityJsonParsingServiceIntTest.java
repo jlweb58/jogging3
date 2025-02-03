@@ -1,11 +1,10 @@
-package com.webber.jogging.service;
+package com.webber.jogging.strava.service;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.webber.jogging.Application;
-import com.webber.jogging.domain.GpxTrackElement;
-import com.webber.jogging.domain.ParsedGpxTrack;
-import com.webber.jogging.strava.service.StravaActivityJsonParsingService;
+import com.webber.jogging.gpx.GpxTrackElement;
+import com.webber.jogging.gpx.ParsedGpxTrack;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ActiveProfiles("test")
 @SpringBootTest(classes = Application.class)
 @Transactional
-public class GpxTrackCreatorIntTest {
+public class StravaActivityJsonParsingServiceIntTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 

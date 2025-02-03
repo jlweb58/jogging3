@@ -1,6 +1,10 @@
 package com.webber.jogging.service;
 
 import com.webber.jogging.Application;
+import com.webber.jogging.activity.Activity;
+import com.webber.jogging.activity.ActivityDuration;
+import com.webber.jogging.activity.ActivityService;
+import com.webber.jogging.activity.ActivityType;
 import com.webber.jogging.domain.*;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;

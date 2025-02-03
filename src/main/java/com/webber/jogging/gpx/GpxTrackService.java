@@ -1,7 +1,4 @@
-package com.webber.jogging.service;
-
-import com.webber.jogging.domain.GpxTrack;
-import com.webber.jogging.domain.ParsedGpxTrack;
+package com.webber.jogging.gpx;
 
 import java.util.Optional;
 

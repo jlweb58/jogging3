@@ -1,7 +1,9 @@
-package com.webber.jogging.domain;
+package com.webber.jogging.activity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.springframework.data.jpa.domain.AbstractPersistable;
+import com.webber.jogging.domain.Gear;
+import com.webber.jogging.domain.User;
+import com.webber.jogging.domain.UserResource;
 
 import jakarta.persistence.*;
 import java.util.Date;
