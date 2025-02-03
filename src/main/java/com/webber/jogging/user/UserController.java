@@ -1,7 +1,8 @@
-package com.webber.jogging.controller;
+package com.webber.jogging.user;
 
-import com.webber.jogging.domain.User;
-import com.webber.jogging.service.UserService;
+import com.webber.jogging.security.ChangePasswordResponse;
+import com.webber.jogging.security.PasswordChangeRequest;
+import com.webber.jogging.security.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

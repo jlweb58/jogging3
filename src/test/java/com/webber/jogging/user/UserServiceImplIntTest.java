@@ -1,7 +1,6 @@
-package com.webber.jogging.service;
+package com.webber.jogging.user;
 
 import com.webber.jogging.Application;
-import com.webber.jogging.domain.User;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

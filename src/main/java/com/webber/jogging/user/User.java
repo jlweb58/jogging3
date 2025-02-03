@@ -1,4 +1,4 @@
-package com.webber.jogging.domain;
+package com.webber.jogging.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.webber.jogging.activity.Activity;

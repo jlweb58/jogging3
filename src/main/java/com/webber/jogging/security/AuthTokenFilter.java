@@ -1,6 +1,6 @@
 package com.webber.jogging.security;
 
-import com.webber.jogging.service.UserDetailsServiceImpl;
+import com.webber.jogging.user.UserDetailsServiceImpl;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

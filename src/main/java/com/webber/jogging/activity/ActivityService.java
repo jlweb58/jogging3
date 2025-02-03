@@ -1,6 +1,6 @@
 package com.webber.jogging.activity;
 
-import com.webber.jogging.domain.User;
+import com.webber.jogging.user.User;
 
 import java.util.Date;
 import java.util.List;

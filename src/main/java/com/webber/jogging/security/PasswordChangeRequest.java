@@ -1,4 +1,4 @@
-package com.webber.jogging.controller;
+package com.webber.jogging.security;
 
 public class PasswordChangeRequest {
     private final String oldPassword;

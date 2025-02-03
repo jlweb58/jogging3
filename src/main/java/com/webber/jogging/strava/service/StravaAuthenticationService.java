@@ -1,6 +1,6 @@
 package com.webber.jogging.strava.service;
 
-import com.webber.jogging.domain.User;
+import com.webber.jogging.user.User;
 import com.webber.jogging.strava.StravaAuthentication;
 
 public interface StravaAuthenticationService {

@@ -1,4 +1,4 @@
-package com.webber.jogging.domain;
+package com.webber.jogging.user;
 
 import org.springframework.data.jpa.domain.AbstractPersistable;
 

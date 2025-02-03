@@ -1,8 +1,8 @@
 package com.webber.jogging.gear;
 
-import com.webber.jogging.controller.UserNotFoundException;
-import com.webber.jogging.domain.User;
-import com.webber.jogging.service.UserService;
+import com.webber.jogging.security.UserNotFoundException;
+import com.webber.jogging.user.User;
+import com.webber.jogging.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

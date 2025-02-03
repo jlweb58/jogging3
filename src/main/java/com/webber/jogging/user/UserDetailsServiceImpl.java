@@ -1,7 +1,5 @@
-package com.webber.jogging.service;
+package com.webber.jogging.user;
 
-import com.webber.jogging.domain.User;
-import com.webber.jogging.repository.UserRepository;
 import com.webber.jogging.security.UserDetailsImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;

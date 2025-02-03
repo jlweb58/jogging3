@@ -1,8 +1,6 @@
-package com.webber.jogging.service;
+package com.webber.jogging.user;
 
-import com.webber.jogging.controller.UserNotFoundException;
-import com.webber.jogging.domain.User;
-import com.webber.jogging.repository.UserRepository;
+import com.webber.jogging.security.UserNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

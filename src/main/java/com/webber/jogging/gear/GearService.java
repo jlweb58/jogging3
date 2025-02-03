@@ -1,6 +1,6 @@
 package com.webber.jogging.gear;
 
-import com.webber.jogging.domain.User;
+import com.webber.jogging.user.User;
 
 import java.util.List;
 

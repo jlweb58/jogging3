@@ -1,9 +1,7 @@
-package com.webber.jogging.controller;
+package com.webber.jogging.security;
 
-import com.webber.jogging.repository.UserRepository;
-import com.webber.jogging.repository.UserRoleRepository;
-import com.webber.jogging.security.JwtUtils;
-import com.webber.jogging.security.UserDetailsImpl;
+import com.webber.jogging.user.UserRepository;
+import com.webber.jogging.user.UserRoleRepository;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

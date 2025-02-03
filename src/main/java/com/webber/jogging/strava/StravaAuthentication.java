@@ -1,6 +1,6 @@
 package com.webber.jogging.strava;
 
-import com.webber.jogging.domain.User;
+import com.webber.jogging.user.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

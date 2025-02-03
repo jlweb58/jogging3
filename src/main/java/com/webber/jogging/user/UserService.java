@@ -1,7 +1,6 @@
-package com.webber.jogging.service;
+package com.webber.jogging.user;
 
-import com.webber.jogging.controller.UserNotFoundException;
-import com.webber.jogging.domain.User;
+import com.webber.jogging.security.UserNotFoundException;
 
 public interface UserService {
     /**

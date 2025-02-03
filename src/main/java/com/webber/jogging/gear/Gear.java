@@ -2,8 +2,8 @@ package com.webber.jogging.gear;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import com.webber.jogging.domain.User;
-import com.webber.jogging.domain.UserResource;
+import com.webber.jogging.user.User;
+import com.webber.jogging.user.UserResource;
 import jakarta.persistence.*;
 
 @Entity

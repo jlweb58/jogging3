@@ -1,8 +1,7 @@
 package com.webber.jogging.configuration;
 
-import com.webber.jogging.security.AuthEntryPointJwt;
 import com.webber.jogging.security.AuthTokenFilter;
-import com.webber.jogging.service.UserDetailsServiceImpl;
+import com.webber.jogging.user.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

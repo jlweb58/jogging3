@@ -2,8 +2,8 @@ package com.webber.jogging.strava.service;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.webber.jogging.domain.User;
-import com.webber.jogging.service.UserService;
+import com.webber.jogging.user.User;
+import com.webber.jogging.user.UserService;
 import com.webber.jogging.strava.StravaAuthentication;
 import com.webber.jogging.strava.StravaAuthenticationRepository;
 import org.slf4j.Logger;
