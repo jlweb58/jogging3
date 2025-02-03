@@ -70,7 +70,7 @@ public class WebSecurityConfig  {
                 .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/jogging/login/**").permitAll()
                 .requestMatchers("/jogging/test/**").permitAll()
                 .requestMatchers("/jogging/strava-api/**").permitAll()
-                .requestMatchers(HttpMethod.OPTIONS, "jogging/**").permitAll()
+                .requestMatchers(HttpMethod.OPTIONS, "/jogging/**").permitAll()
                 .requestMatchers("/jogging/activities/**").authenticated()
                 .requestMatchers("/jogging/gear/**").authenticated()
                 .anyRequest().authenticated());

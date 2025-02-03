@@ -1,6 +1,7 @@
 package com.webber.jogging.strava;
 
 
+import com.webber.jogging.strava.service.StravaActivityService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/jogging/strava-api")
-public class StravaNewActivityWebhook {
+public class StravaActivityWebhookController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(StravaNewActivityWebhook.class);
+    private static final Logger LOG = LoggerFactory.getLogger(StravaActivityWebhookController.class);
+
+    private final StravaActivityService stravaActivityService;
+
+    public StravaActivityWebhookController(StravaActivityService stravaActivityService) {
+        this.stravaActivityService = stravaActivityService;
+    }
 
     @GetMapping
     public ResponseEntity<WebhookValidationResponse> validateWebhook(
@@ -38,7 +45,18 @@ public class StravaNewActivityWebhook {
     public ResponseEntity<Void> handleWebhookEvent(@RequestBody StravaWebhookEvent event) {
         LOG.info("Received webhook event. Type: {}, Object Type: {}, Object ID: {}, Owner ID: {}",
                 event.aspectType(), event.objectType(), event.objectId(), event.ownerId());
+        if ("activity".equals(event.objectType())) {
+            stravaActivityService.getActivity(event.objectId())
+                    .subscribe(
+                            activity -> {
+                                LOG.info("Processing activity: {}", activity.name());
+                            },
+                            error -> {
+                                LOG.error("Error processing activity: {}", error.getMessage());
+                            }
+                    );
 
+        }
         return ResponseEntity.ok().build();
     }
 }

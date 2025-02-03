@@ -24,18 +24,8 @@ public class Application {
     private static final Logger LOGGER = LoggerFactory.getLogger(Application.class);
 
        public static void main(String[] args) throws Exception {
-
-
         ConfigurableApplicationContext ctx = SpringApplication.run(Application.class, args);
-
-           // Environment variables are default
-           LOGGER.info("JAVA_ENV=" + System.getenv("JAVA_ENV") + " (Environment)");
-
-           LOGGER.error("log4j security fix active=" + System.getProperty("log4j2.formatMsgNoLookups"));
-
-           // You can overwrite it with your command line arguments
-           LOGGER.info("spring.profiles.active=" + System.getProperty("spring.profiles.active") + " (Command Line)");
-        LOGGER.info("Application Running!!!");
+        LOGGER.info("Application Running");
         //System.out.println(new BCryptPasswordEncoder().encode("pw"));
 
     }

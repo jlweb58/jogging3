@@ -18,7 +18,7 @@ apply plugin: "application"
 wrapper { gradleVersion = "8.8" }
 
 group = "com.webber"
-version = "0.1.2"
+version = "0.1.3"
 
 java {
 	toolchain {
@@ -26,23 +26,9 @@ java {
 	}
 }
 
-
-
 compileJava {
     sourceCompatibility = 17
     targetCompatibility = 17
-}
-
-
-// Define the main class for the application
-bootRun {
-    main = "com.webber.jogging.Application"
-    String activeProfile =  System.properties["spring.profiles.active"]
-    systemProperty "spring.profiles.active", activeProfile
-}
-
-application {
-    mainClassName =  "com.webber.jogging.Application"
 }
 
 dependencies {
@@ -51,8 +37,6 @@ dependencies {
     implementation "org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}"
     implementation "org.springframework.boot:spring-boot-starter-security:${springBootVersion}"
 	implementation "org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}"
-	implementation "org.springframework.boot:spring-boot-starter-mail:${springBootVersion}"
-	implementation "org.springframework.boot:spring-boot-starter-thymeleaf:${springBootVersion}"
 	implementation "org.springframework.cloud:spring-cloud-context:4.1.1"
 	implementation "org.springframework.boot:spring-boot-configuration-processor:${springBootVersion}"
 	implementation "io.jsonwebtoken:jjwt-api:0.12.3"
@@ -62,9 +46,9 @@ dependencies {
 
     implementation "org.apache.commons:commons-lang3:3.17.0"
     implementation "commons-io:commons-io:2.18.0"
-    implementation "com.fasterxml.jackson.core:jackson-core:2.18.2"
-    implementation "com.fasterxml.jackson.core:jackson-databind:2.18.2"
-    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2"
+//    implementation "com.fasterxml.jackson.core:jackson-core:2.18.2"
+//    implementation "com.fasterxml.jackson.core:jackson-databind:2.18.2"
+//    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.2"
 
     runtimeOnly "org.mariadb.jdbc:mariadb-java-client"
 	testImplementation "org.springframework.boot:spring-boot-starter-test"
