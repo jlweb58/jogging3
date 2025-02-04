@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 @ActiveProfiles("test")
 @SpringBootTest(classes = Application.class)
 @Transactional
-public class StravaActivityJsonParsingServiceIntTest {
+public class StravaActivityStreamJsonParsingServiceIntTest {
 
     private final ObjectMapper objectMapper = new ObjectMapper();
 
@@ -31,7 +31,7 @@ public class StravaActivityJsonParsingServiceIntTest {
         String jsonContent = new String(resource.getInputStream().readAllBytes());
         Instant startTime = Instant.parse("2024-02-01T10:00:00Z"); // Use a fixed time for testing
 
-        StravaActivityJsonParsingService service = new StravaActivityJsonParsingService(new ObjectMapper());
+        StravaActivityStreamJsonParsingService service = new StravaActivityStreamJsonParsingService(new ObjectMapper());
 
         // When
         ParsedGpxTrack gpxTrack = service.parseActivityJson(jsonContent, startTime);

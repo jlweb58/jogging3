@@ -34,7 +34,7 @@ public class StravaAuthenticationServiceImpl implements StravaAuthenticationServ
 
     private static final String GRANT_TYPE_REFRESH = "refresh_token";
 
-    private static final String DEFAULT_USER = "jwebber";
+    public static final String DEFAULT_USER = "jwebber";
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StravaAuthenticationServiceImpl.class);
 

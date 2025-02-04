@@ -2,6 +2,7 @@ package com.webber.jogging.strava;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+
 public record StravaActivityDto(
         Long id,
         String name,
@@ -12,5 +13,8 @@ public record StravaActivityDto(
         @JsonProperty("start_date_local")
         String startDateLocal,
         @JsonProperty("moving_time")
-        Long movingTime
+        Long movingTime,
+        @JsonProperty("map")
+        Map map
 ) { }
+

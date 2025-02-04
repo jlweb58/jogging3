@@ -1,14 +1,23 @@
 package com.webber.jogging.activity;
 
+import com.webber.jogging.gpx.GpxTrack;
+import com.webber.jogging.gpx.GpxTrackService;
+import com.webber.jogging.gpx.ParsedGpxTrack;
 import com.webber.jogging.strava.StravaActivityDto;
+import com.webber.jogging.strava.service.ActivityDataArray;
+import com.webber.jogging.strava.service.StravaActivityService;
+import com.webber.jogging.strava.service.StravaActivityStreamJsonParsingService;
 import com.webber.jogging.user.User;
-import com.webber.jogging.user.UserService;
 import jakarta.persistence.EntityManager;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
@@ -17,19 +26,27 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Slf4j
 public class ActivityServiceImpl implements ActivityService {
 
     private final ActivityRepository activityRepository;
 
-    private final UserService userService;
-
     private final EntityManager entityManager;
 
+    private final StravaActivityService stravaActivityService;
+
+    private final StravaActivityStreamJsonParsingService stravaActivityStreamJsonParsingService;
+
+    private final GpxTrackService gpxTrackService;
+
     @Autowired
-    public ActivityServiceImpl(ActivityRepository activityRepository, UserService userService, EntityManager entityManager) {
+    public ActivityServiceImpl(ActivityRepository activityRepository,
+                               EntityManager entityManager, StravaActivityService stravaActivityService, StravaActivityStreamJsonParsingService stravaActivityStreamJsonParsingService, GpxTrackService gpxTrackService) {
         this.activityRepository = activityRepository;
-        this.userService = userService;
         this.entityManager = entityManager;
+        this.stravaActivityService = stravaActivityService;
+        this.stravaActivityStreamJsonParsingService = stravaActivityStreamJsonParsingService;
+        this.gpxTrackService = gpxTrackService;
     }
 
     @Override
@@ -75,10 +92,8 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public void processNewActivity(StravaActivityDto activityDto) {
-        processNewActivityTransactional(activityDto);
-    }
-
-    protected void processNewActivityTransactional(StravaActivityDto activityDto) {
+        // This looks strange, but I found no other way of making this work inside the
+        // transaction boundaries, always got a "could not initialize proxy" error.
         User user = entityManager.createQuery(
                         "SELECT u FROM User u LEFT JOIN FETCH u.activities WHERE u.username = :username",
                         User.class)
@@ -93,6 +108,28 @@ public class ActivityServiceImpl implements ActivityService {
         Activity activity = Activity.build(date, course, distance, activityDuration, null, null, heartRate, user, activityType);
         this.create(activity);
 
+        if (activityDto.map() != null && !StringUtils.isEmpty(activityDto.map().polyline())) {
+            processActivityStream(activity.getId(), activityDto.id(), date.toInstant());
+        }
 
     }
+
+    @Async
+    protected void processActivityStream(Long activityId, Long stravaActivityId, Instant activityStartDate) {
+        try {
+            List<ActivityDataArray> streamArrays = stravaActivityService.getActivityStreams(activityId).block(Duration.ofSeconds(10));
+            ParsedGpxTrack parsedGpxTrack = stravaActivityStreamJsonParsingService.parseActivityDataStream(streamArrays, activityStartDate);
+
+        } catch (Exception e) {
+            log.error("Failed to process activity stream for activity {}: {}", activityId, e.getMessage());
+        }
+    }
+
+    @Transactional
+    protected void updateActivityWithGpxTrack(Long activityId, ParsedGpxTrack parsedGpxTrack) {
+        Activity activity = activityRepository.findById(activityId).orElseThrow(() -> new IllegalArgumentException("Activity " + activityId + " not found"));
+        User user = activity.getUser();
+        GpxTrack gpxTrack = new GpxTrack()
+    }
+
 }

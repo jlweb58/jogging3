@@ -14,18 +14,22 @@ import java.util.List;
 import java.util.stream.IntStream;
 
 @Service
-public class StravaActivityJsonParsingService {
+public class StravaActivityStreamJsonParsingService {
 
     private final ObjectMapper objectMapper;
 
-    public StravaActivityJsonParsingService(ObjectMapper objectMapper) {
+    public StravaActivityStreamJsonParsingService(ObjectMapper objectMapper) {
         this.objectMapper = objectMapper;
     }
 
 
     public ParsedGpxTrack parseActivityJson(String jsonContent, Instant activityStartTime) throws IOException {
         ActivityData activityData = parseToActivityData(jsonContent, activityStartTime);
+        return convertToGpxTrack(activityData);
+    }
 
+    public ParsedGpxTrack parseActivityDataStream(List<ActivityDataArray> streamArrays, Instant activityStartTime)  {
+        ActivityData activityData = getActivityData(activityStartTime, streamArrays);
         return convertToGpxTrack(activityData);
     }
 
@@ -37,6 +41,10 @@ public class StravaActivityJsonParsingService {
                 }
         );
 
+        return getActivityData(startTime, rawData);
+    }
+
+    private ActivityData getActivityData(Instant startTime, List<ActivityDataArray> rawData) {
         List<double[]> coordinates = null;
         List<Double> distances = new ArrayList<>();
         List<Double> altitudes = new ArrayList<>();
@@ -45,37 +53,37 @@ public class StravaActivityJsonParsingService {
 
         // Process each data array based on its type
         for (ActivityDataArray array : rawData) {
-            switch (array.getType()) {
+            switch (array.type()) {
                 case "latlng":
                     coordinates = objectMapper.convertValue(
-                            array.getData(),
+                            array.data(),
                             new TypeReference<List<double[]>>() {}
                     );
                     break;
                 case "distance":
                     List<Number> distanceData = objectMapper.convertValue(
-                            array.getData(),
+                            array.data(),
                             new TypeReference<List<Number>>() {}
                     );
                     distanceData.forEach(d -> distances.add(d.doubleValue()));
                     break;
                 case "altitude":
                     List<Number> altitudeData = objectMapper.convertValue(
-                            array.getData(),
+                            array.data(),
                             new TypeReference<List<Number>>() {}
                     );
                     altitudeData.forEach(a -> altitudes.add(a.doubleValue()));
                     break;
                 case "heartrate":
                     List<Integer> heartRateData = objectMapper.convertValue(
-                            array.getData(),
+                            array.data(),
                             new TypeReference<List<Integer>>() {}
                     );
                     heartRates.addAll(heartRateData);
                     break;
                 case "time":
                     List<Integer> timeData = objectMapper.convertValue(
-                            array.getData(),
+                            array.data(),
                             new TypeReference<List<Integer>>() {}
                     );
                     elapsedSeconds.addAll(timeData);
