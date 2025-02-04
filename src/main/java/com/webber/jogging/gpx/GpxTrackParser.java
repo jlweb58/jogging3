@@ -2,10 +2,14 @@ package com.webber.jogging.gpx;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
 import java.io.InputStream;
 import java.time.Instant;
 import java.util.ArrayList;
@@ -28,8 +32,9 @@ public final class GpxTrackParser {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(gpxTrackStream);
+
         Element gpx = document.getDocumentElement();
-        NodeList trkPtList = gpx.getElementsByTagName(TRKPT);
+        NodeList trkPtList = document.getElementsByTagName(TRKPT);
         ParsedGpxTrack gpxTrack = new ParsedGpxTrack();
         List<GpxTrackElement> childTracks = getGpxTrackElementList(trkPtList);
         gpxTrack.setTrackElements(childTracks);

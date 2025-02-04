@@ -38,14 +38,14 @@ public class StravaAuthenticationServiceImpl implements StravaAuthenticationServ
 
     private static final Logger LOGGER = LoggerFactory.getLogger(StravaAuthenticationServiceImpl.class);
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
 
     @Autowired
-    public StravaAuthenticationServiceImpl(StravaAuthenticationRepository repository, WebClient.Builder webClientBuilder) {
+    public StravaAuthenticationServiceImpl(StravaAuthenticationRepository repository, WebClient.Builder webClientBuilder, UserService userService) {
         this.repository = repository;
         this.webClient = webClientBuilder.baseUrl(stravaOathUrl).build();
+        this.userService = userService;
     }
 
 

@@ -3,8 +3,8 @@ package com.webber.jogging.activity;
 import com.webber.jogging.gpx.GpxTrack;
 import com.webber.jogging.gpx.GpxTrackService;
 import com.webber.jogging.gpx.ParsedGpxTrack;
+import com.webber.jogging.gpx.xml.GpxConverter;
 import com.webber.jogging.strava.StravaActivityDto;
-import com.webber.jogging.strava.service.ActivityDataArray;
 import com.webber.jogging.strava.service.StravaActivityService;
 import com.webber.jogging.strava.service.StravaActivityStreamJsonParsingService;
 import com.webber.jogging.user.User;
@@ -12,11 +12,14 @@ import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.TransactionManager;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.transaction.support.TransactionTemplate;
+import reactor.core.publisher.Mono;
 
-import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -39,14 +42,22 @@ public class ActivityServiceImpl implements ActivityService {
 
     private final GpxTrackService gpxTrackService;
 
+    private final GpxConverter gpxConverter;
+
+    private final TransactionTemplate transactionTemplate;
+
     @Autowired
-    public ActivityServiceImpl(ActivityRepository activityRepository,
-                               EntityManager entityManager, StravaActivityService stravaActivityService, StravaActivityStreamJsonParsingService stravaActivityStreamJsonParsingService, GpxTrackService gpxTrackService) {
+    public ActivityServiceImpl(ActivityRepository activityRepository, PlatformTransactionManager transactionManager,
+                               EntityManager entityManager, StravaActivityService stravaActivityService,
+                               StravaActivityStreamJsonParsingService stravaActivityStreamJsonParsingService,
+                               GpxTrackService gpxTrackService, GpxConverter gpxConverter) {
         this.activityRepository = activityRepository;
         this.entityManager = entityManager;
         this.stravaActivityService = stravaActivityService;
         this.stravaActivityStreamJsonParsingService = stravaActivityStreamJsonParsingService;
         this.gpxTrackService = gpxTrackService;
+        this.gpxConverter = gpxConverter;
+        this.transactionTemplate = new TransactionTemplate(transactionManager);
     }
 
     @Override
@@ -109,27 +120,41 @@ public class ActivityServiceImpl implements ActivityService {
         this.create(activity);
 
         if (activityDto.map() != null && !StringUtils.isEmpty(activityDto.map().polyline())) {
-            processActivityStream(activity.getId(), activityDto.id(), date.toInstant());
+            processActivityStream(activity.getId(), activityDto.id(), date.toInstant(), user)
+                    .subscribe(
+                            savedActivity -> log.info("Successfully processed stream for activity: {}", activity.getId()),
+                            error -> log.error("Error processing stream for activity: {}: {}", activity.getId(), error.getMessage())
+                    );
         }
 
     }
 
-    @Async
-    protected void processActivityStream(Long activityId, Long stravaActivityId, Instant activityStartDate) {
-        try {
-            List<ActivityDataArray> streamArrays = stravaActivityService.getActivityStreams(activityId).block(Duration.ofSeconds(10));
-            ParsedGpxTrack parsedGpxTrack = stravaActivityStreamJsonParsingService.parseActivityDataStream(streamArrays, activityStartDate);
 
-        } catch (Exception e) {
-            log.error("Failed to process activity stream for activity {}: {}", activityId, e.getMessage());
-        }
+    public Mono<ParsedGpxTrack> processActivityStream(Long activityId, Long stravaActivityId, Instant activityStartDate, User user) {
+            return stravaActivityService.getActivityStreams(stravaActivityId)
+                    .flatMap(streamArrays -> {
+                        ParsedGpxTrack parsedGpxTrack = stravaActivityStreamJsonParsingService.parseActivityDataStream(streamArrays, activityStartDate);
+                        return updateActivityWithGpxTrack(activityId, parsedGpxTrack, user);
+
+                    })
+                    .doOnError(error -> log.error("Failed to process activity stream for activity {}: {} ", activityId, error.getMessage()));
     }
 
-    @Transactional
-    protected void updateActivityWithGpxTrack(Long activityId, ParsedGpxTrack parsedGpxTrack) {
-        Activity activity = activityRepository.findById(activityId).orElseThrow(() -> new IllegalArgumentException("Activity " + activityId + " not found"));
-        User user = activity.getUser();
-        GpxTrack gpxTrack = new GpxTrack()
+    protected Mono<ParsedGpxTrack> updateActivityWithGpxTrack(Long activityId, ParsedGpxTrack parsedGpxTrack, User user)  {
+       return Mono.fromCallable(() ->
+       transactionTemplate.execute(status -> {
+           Activity activity = entityManager.find(Activity.class, activityId);
+           activity = entityManager.merge(activity);
+           String gpxTrackXmlString = gpxConverter.convertToGpx(parsedGpxTrack, activity.getCourse());
+           GpxTrack gpxTrack = new GpxTrack(gpxTrackXmlString, activity, user);
+           try {
+               return gpxTrackService.save(gpxTrack);
+
+           } catch (Exception e) {
+               throw new RuntimeException(e);
+           }
+       })
+       );
     }
 
 }

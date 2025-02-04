@@ -3,7 +3,6 @@ package com.webber.jogging.activity;
 import com.webber.jogging.security.UserNotFoundException;
 import com.webber.jogging.user.User;
 import com.webber.jogging.user.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,11 +18,14 @@ import java.util.List;
 @RequestMapping("/jogging")
 public class ActivityController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    private ActivityService activityService;
+    private final ActivityService activityService;
+
+    public ActivityController(UserService userService, ActivityService activityService) {
+        this.userService = userService;
+        this.activityService = activityService;
+    }
 
     @GetMapping(path = "/hello")
     public String sayPlainTextHello() {
