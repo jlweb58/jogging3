@@ -1,8 +1,6 @@
 package com.webber.jogging.strava.service;
 
-import com.webber.jogging.activity.ActivityService;
 import com.webber.jogging.strava.StravaActivityDto;
-import com.webber.jogging.user.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
@@ -48,12 +46,10 @@ public class StravaActivityServiceImpl implements StravaActivityService {
                 .uri("/activities/{id}/streams?keys=latlng,time,altitude,heartrate", activityId)
                 .headers(headers -> headers.setBearerAuth(stravaAuthenticationService.getDefaultToken().getAccessToken()))
                 .retrieve()
-                .bodyToMono(new ParameterizedTypeReference<List<ActivityDataArray>>() {})
+                .bodyToMono(new ParameterizedTypeReference<List<ActivityDataArray>>() {
+                })
                 .doOnSuccess(streams -> log.info("Fetched streams for activity {}", activityId))
                 .doOnError(error -> log.error("Error fetching streams for activity {}: {}",
                         activityId, error.getMessage()));
     }
-
-
-
 }

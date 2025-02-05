@@ -32,7 +32,7 @@ public class GpxTrackController {
             ParsedGpxTrack parsedGpxTrack = gpxTrackService.findForId(id);
             return ResponseEntity.ok(parsedGpxTrack);
         } catch (EntityNotFoundException e) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
