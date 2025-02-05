@@ -9,6 +9,7 @@ import jakarta.persistence.*;
 import java.util.Date;
 
 @Entity
+@Table(name = "activities")
 public class Activity implements UserResource {
 
     private static final long serialVersionUID = -8506894102933517235L;

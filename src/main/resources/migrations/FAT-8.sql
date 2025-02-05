@@ -1,0 +1,1 @@
+RENAME TABLE activity to activities;
