@@ -18,8 +18,18 @@ public class StravaAuthentication {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "expirationdate", nullable = false)
+    @Column(name = "expiration_date", nullable = false)
     private LocalDateTime expirationDate;
+
+    @Column(name = "access_token")
+    private String accessToken;
+
+    @Column(name = "refresh_token")
+    private String refreshToken;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     public StravaAuthentication(String accessToken, String refreshToken, User user, LocalDateTime expirationDate) {
         this.accessToken = accessToken;
@@ -27,16 +37,6 @@ public class StravaAuthentication {
         this.user = user;
         this.expirationDate = expirationDate;
     }
-
-    @Column(name = "accesstoken")
-    private String accessToken;
-
-    @Column(name = "refreshtoken")
-    private String refreshToken;
-
-    @OneToOne
-    @JoinColumn(name = "userid")
-    private User user;
 
     public StravaAuthentication() {
         super();

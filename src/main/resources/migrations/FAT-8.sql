@@ -1,10 +1,8 @@
 RENAME TABLE activity TO activities;
 
-ALTER TABLE activities CHANGE COLUMN Date activity_date date;
+ALTER TABLE activities CHANGE COLUMN Date activity_date date not null;
 
 ALTER TABLE activities CHANGE COLUMN Distance distance double;
-
-ALTER TABLE activities MODIFY activity_date date not null;
 
 ALTER TABLE activities MODIFY course varchar(45) not null;
 
@@ -34,24 +32,20 @@ ALTER TABLE gpx_tracks CHANGE COLUMN userid user_id int(11) NOT NULL ;
 
 RENAME TABLE user_role TO users_roles;
 
-ALTER TABLE users_roles CHANGE COLUMN rolename role_name varchar(100);
-
-ALTER TABLE users_roles MODIFY role_name varchar(100) NOT NULL;
-
-
-ALTER TABLE users_roles DROP CONSTRAINT fk_user_role_users;
-
-ALTER TABLE users_roles DROP CONSTRAINT ix_user_role_users;
+ALTER TABLE users_roles CHANGE COLUMN rolename role_name varchar(100) NOT NULL;
 
 ALTER TABLE users_roles CHANGE COLUMN userid user_id int(11) NOT NULL;
 
-ALTER TABLE users_roles ADD CONSTRAINT fk_user_role_users FOREIGN KEY (user_id) REFERENCES app_users(id);
+ALTER TABLE gear CHANGE COLUMN mileageOffset mileage_offset double;
 
-ALTER TABLE users_roles ADD CONSTRAINT ix_user_role_users UNIQUE (user_id, role_name);
+ALTER TABLE gear CHANGE COLUMN userid user_id  int(11);
 
-/*
+ALTER TABLE gear CHANGE COLUMN geartype gear_type varchar(16);
 
- UNIQUE KEY `ix_user_role_users` (`userid`,`role_name`),
-  CONSTRAINT `fk_user_role_users` FOREIGN KEY (`userid`) REFERENCES `app_users` (`id`)
- */
+ALTER TABLE strava_authentication CHANGE COLUMN expirationDate expiration_date datetime;
 
+ALTER TABLE strava_authentication CHANGE COLUMN accessToken access_token varchar(255);
+
+ALTER TABLE strava_authentication CHANGE COLUMN refreshToken refresh_token varchar(255);
+
+ALTER TABLE strava_authentication CHANGE COLUMN userId user_id int(11);

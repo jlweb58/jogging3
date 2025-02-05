@@ -9,9 +9,6 @@ import jakarta.persistence.*;
 @Entity
 public class Gear implements UserResource {
 
-    private static final long serialVersionUID = 2095849911820717778L;
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
@@ -23,7 +20,7 @@ public class Gear implements UserResource {
     // The mileage offset is a user-configurable base value for the mileage, e.g.
     // if "used" gear is added, where the user knows approximately how many km
     // the gear already has.
-    @Column(name = "mileageoffset", nullable = true)
+    @Column(name = "mileage_offset", nullable = true)
     private double mileageOffset;
 
     // This is calculated dynamically on loading
@@ -32,7 +29,7 @@ public class Gear implements UserResource {
     private double mileage;
 
     @ManyToOne
-    @JoinColumn(name = "userid", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
 
@@ -46,7 +43,7 @@ public class Gear implements UserResource {
     private boolean preferred;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "geartype", nullable = true)
+    @Column(name = "gear_type", nullable = true)
     private GearType gearType;
 
     public Gear(String name, double mileageOffset, User user) {
