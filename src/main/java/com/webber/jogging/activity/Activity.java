@@ -12,46 +12,44 @@ import java.util.Date;
 @Table(name = "activities")
 public class Activity implements UserResource {
 
-    private static final long serialVersionUID = -8506894102933517235L;
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "course", nullable = true)
+    @Column(name = "course", nullable = false)
     private String course;
 
     @Embedded
     private ActivityDuration activityDuration = new ActivityDuration(0, 0, 0);
 
-    @Column(name = "distance", nullable = false)
+    @Column(name = "distance")
     private double distance;
 
-    @Column(name = "comments", nullable = true)
+    @Column(name = "comments")
     private String comments = "";
 
-    @Column(name = "weather", nullable = true)
+    @Column(name = "weather")
     private String weather;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "activity_date", nullable = false)
     @Temporal(TemporalType.DATE)
     private Date date;
 
-    @Column(name = "avgheartrate", nullable = true)
+    @Column(name = "avg_heart_rate")
     private Integer avgHeartRate;
 
-    @ManyToOne(optional = true, fetch = FetchType.EAGER)
-    @JoinColumn(name = "gearid", nullable = true)
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "gear_id")
     private Gear gear;
 
     @ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "userid", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "activitytype", nullable = true)
+    @Column(name = "activity_type")
     private ActivityType activityType;
 
     public Long getId() {
