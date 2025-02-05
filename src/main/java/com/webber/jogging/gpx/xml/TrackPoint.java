@@ -20,17 +20,6 @@ public class TrackPoint {
     @XmlElement
     private String time;
 
-    public TrackPoint(String lat, String lon, double ele, String time, Extensions extensions) {
-        this.lat = lat;
-        this.lon = lon;
-        this.ele = ele;
-        this.time = time;
-        this.extensions = extensions;
-    }
-
-    public TrackPoint() {
-    }
-
     @XmlElement(name = "extensions")
     private Extensions extensions = new Extensions();
 }

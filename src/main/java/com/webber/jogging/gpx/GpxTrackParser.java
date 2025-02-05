@@ -32,8 +32,6 @@ public final class GpxTrackParser {
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(gpxTrackStream);
-
-        Element gpx = document.getDocumentElement();
         NodeList trkPtList = document.getElementsByTagName(TRKPT);
         ParsedGpxTrack gpxTrack = new ParsedGpxTrack();
         List<GpxTrackElement> childTracks = getGpxTrackElementList(trkPtList);

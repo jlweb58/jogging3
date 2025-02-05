@@ -20,7 +20,5 @@ public class GpxType {
 
     @XmlElement(name = "trk")
     Track track;
-
-    public GpxType() {}
 }
 

@@ -24,8 +24,6 @@ public class GpxConverter {
             Marshaller marshaller = context.createMarshaller();
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
-            GpxType gpx = createGpxType(parsedTrack, activityName);
-
             StringWriter writer = new StringWriter();
             XMLStreamWriter xmlStreamWriter = XMLOutputFactory.newInstance().createXMLStreamWriter(writer);
             xmlStreamWriter.setNamespaceContext(new NamespaceContext() {
@@ -43,8 +41,8 @@ public class GpxConverter {
                     return null;
                 }
             });
+            GpxType gpx = createGpxType(parsedTrack, activityName);
             marshaller.marshal(gpx, xmlStreamWriter);
-
             return writer.toString();
         } catch (JAXBException e) {
             throw new RuntimeException("Failed to convert to GPX", e);
@@ -81,7 +79,7 @@ public class GpxConverter {
         TrackPoint point = new TrackPoint();
         point.setLat(String.format("%.7f", element.latitude()));
         point.setLon(String.format("%.7f", element.longitude()));
-       point.setEle(element.elevation());
+        point.setEle(element.elevation());
         point.setTime(element.timestamp().toString());
 
         // Set heart rate

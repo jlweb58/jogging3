@@ -20,12 +20,4 @@ public class Track {
     @XmlElement(name = "trkseg")
     private TrackSegment segment;
 
-    public Track(String name, String type, TrackSegment segment) {
-        this.name = name;
-        this.type = type;
-        this.segment = segment;
-    }
-
-    public Track() {
-    }
 }
