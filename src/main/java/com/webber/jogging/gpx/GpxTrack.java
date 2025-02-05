@@ -8,7 +8,7 @@ import com.webber.jogging.user.UserResource;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "gpx_track")
+@Table(name = "gpx_tracks")
 public class GpxTrack implements UserResource {
 
     @Id
@@ -16,7 +16,7 @@ public class GpxTrack implements UserResource {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "gpxtrack", nullable = false, columnDefinition = "MEDIUMTEXT")
+    @Column(name = "gpx_track", nullable = false, columnDefinition = "MEDIUMTEXT")
     private String gpxTrack;
 
     @OneToOne(fetch = FetchType.LAZY)
@@ -25,7 +25,7 @@ public class GpxTrack implements UserResource {
     private Activity activity;
 
     @ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.LAZY)
-    @JoinColumn(name = "userid", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     @JsonIgnore
     private User user;
 

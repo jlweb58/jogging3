@@ -12,18 +12,18 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "user_role")
+@Table(name = "users_roles")
 public class UserRole extends AbstractPersistable<Long> {
 
     @Enumerated(EnumType.STRING)
-    @Column(length = 20, name="rolename", nullable = false)
+    @Column(length = 100, name="role_name", nullable = false)
     private Role role;
 
     @ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.EAGER)
     @JoinColumn(name = "userid", nullable = false)
     private User user;
 
-    private UserRole() {
+    protected UserRole() {
         // for hibernate
     }
 
