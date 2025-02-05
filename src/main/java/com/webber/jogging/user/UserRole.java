@@ -20,7 +20,7 @@ public class UserRole extends AbstractPersistable<Long> {
     private Role role;
 
     @ManyToOne(targetEntity = User.class, optional = false, fetch = FetchType.EAGER)
-    @JoinColumn(name = "userid", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
     protected UserRole() {
