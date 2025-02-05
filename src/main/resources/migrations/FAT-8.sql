@@ -16,7 +16,7 @@ ALTER TABLE activities CHANGE COLUMN AvgHeartRate avg_heart_rate int(10) unsigne
 
 ALTER TABLE activities CHANGE COLUMN activitytype activity_type varchar(16);
 
-ALTER TABLE activities CHANGE COLUMN ID id int(10) unsigned;
+ALTER TABLE activities CHANGE COLUMN ID id int(10) unsigned AUTO_INCREMENT;
 
 ALTER TABLE activities CHANGE COLUMN userId user_id int(11);
 

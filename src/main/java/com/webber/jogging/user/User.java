@@ -4,12 +4,16 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.webber.jogging.activity.Activity;
 import com.webber.jogging.gear.Gear;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "app_users")
 public class User {
@@ -41,10 +45,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private Set<UserRole> userRoles = new HashSet<>();
 
-    public Long getId() {
-        return id;
-    }
-
     protected User() {
         //Needed for Hibernate
     }
@@ -54,50 +54,6 @@ public class User {
         this.password = password;
         this.email = email;
         this.enabled = enabled;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public boolean isEnabled() {
-        return enabled;
-    }
-
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public List<Activity> getActivities() {
-        return activities;
-    }
-
-    public List<Gear> getGear() {
-        return gear;
-    }
-
-    public void setGear(List<Gear> gear) {
-        this.gear = gear;
     }
 
     public void addGear(Gear newGear) {
@@ -110,14 +66,6 @@ public class User {
     public void addActivity(Activity newActivity) {
         activities.add(newActivity);
         newActivity.setUser(this);
-    }
-
-    public Set<UserRole> getUserRoles() {
-        return this.userRoles;
-    }
-
-    public void setUserRoles(Set<UserRole> userRoles) {
-        this.userRoles = userRoles;
     }
 
     @Override

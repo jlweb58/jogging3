@@ -6,8 +6,13 @@ import com.webber.jogging.user.User;
 import com.webber.jogging.user.UserResource;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Date;
 
+@Getter
+@Setter
 @Entity
 @Table(name = "activities")
 public class Activity implements UserResource {
@@ -52,10 +57,6 @@ public class Activity implements UserResource {
     @Column(name = "activity_type")
     private ActivityType activityType;
 
-    public Long getId() {
-        return id;
-    }
-
     Activity(Date date, String course, double distance, ActivityDuration activityDuration,
              String weather, String comments, Integer avgHeartRate, ActivityType activityType) {
         this.date = date;
@@ -76,95 +77,12 @@ public class Activity implements UserResource {
     }
 
     protected Activity() {
-
         //needed for JPA
-    }
-
-    public String getCourse() {
-        return course;
-    }
-
-    public void setCourse(String name) {
-        this.course = name;
-    }
-
-    public ActivityDuration getActivityDuration() {
-        if (activityDuration == null) {
-            return new ActivityDuration(0, 0, 0);
-        }
-        return activityDuration;
-    }
-
-    public void setActivityDuration(ActivityDuration activityDuration) {
-        if (activityDuration == null) {
-            activityDuration = new ActivityDuration(0, 0, 0);
-        }
-        this.activityDuration = activityDuration;
-    }
-
-    public double getDistance() {
-        return distance;
-    }
-
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
-
-    public String getComments() {
-        return comments;
-    }
-
-    public void setComments(String comments) {
-        this.comments = comments;
-    }
-
-    public Gear getGear() {
-        return gear;
-    }
-
-    public void setGear(Gear gear) {
-        this.gear = gear;
-    }
-
-    public String getWeather() {
-        return weather;
-    }
-
-    public void setWeather(String weather) {
-        this.weather = weather;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public Integer getAvgHeartRate() {
-        return avgHeartRate;
-    }
-
-    public void setAvgHeartRate(Integer avgHeartRate) {
-        this.avgHeartRate = avgHeartRate;
     }
 
     @Override
     public User getUser() {
         return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public ActivityType getActivityType() {
-        return activityType;
-    }
-
-    public void setActivityType(ActivityType activityType) {
-        this.activityType = activityType;
     }
 
     @Override

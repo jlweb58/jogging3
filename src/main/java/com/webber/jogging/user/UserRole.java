@@ -1,5 +1,7 @@
 package com.webber.jogging.user;
 
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
 import jakarta.persistence.Column;
@@ -12,6 +14,8 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
+@Getter
+@Setter
 @Table(name = "users_roles")
 public class UserRole extends AbstractPersistable<Long> {
 
@@ -27,24 +31,4 @@ public class UserRole extends AbstractPersistable<Long> {
         // for hibernate
     }
 
-    public UserRole(User user, Role role) {
-        this.user = user;
-        this.role = role;
-    }
-
-    public Role getRole() {
-        return role;
-    }
-
-    public void setRole(Role role) {
-        this.role = role;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
 }

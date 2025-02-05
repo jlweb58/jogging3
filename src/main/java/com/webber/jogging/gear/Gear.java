@@ -5,8 +5,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.webber.jogging.user.User;
 import com.webber.jogging.user.UserResource;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
+@Getter
+@Setter
 public class Gear implements UserResource {
 
     @Id
@@ -20,7 +24,7 @@ public class Gear implements UserResource {
     // The mileage offset is a user-configurable base value for the mileage, e.g.
     // if "used" gear is added, where the user knows approximately how many km
     // the gear already has.
-    @Column(name = "mileage_offset", nullable = true)
+    @Column(name = "mileage_offset")
     private double mileageOffset;
 
     // This is calculated dynamically on loading
@@ -43,7 +47,7 @@ public class Gear implements UserResource {
     private boolean preferred;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "gear_type", nullable = true)
+    @Column(name = "gear_type")
     private GearType gearType;
 
     public Gear(String name, double mileageOffset, User user) {
@@ -53,33 +57,9 @@ public class Gear implements UserResource {
         this.active = true;
     }
 
-    public Gear(String name, User user) {
-        this(name, 0.0, user);
-    }
-
     protected Gear() {
 
         //for JPA
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public double getMileageOffset() {
-        return mileageOffset;
-    }
-
-    public void setMileageOffset(double mileageOffset) {
-        this.mileageOffset = mileageOffset;
     }
 
     @Override
@@ -87,50 +67,9 @@ public class Gear implements UserResource {
         return user;
     }
 
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public double getMileage() {
-        return mileage;
-    }
-
-    public void setMileage(double mileage) {
-        this.mileage = mileage;
-    }
-
-    public boolean isActive() {
-        return active;
-    }
-
-    public void setActive(boolean active) {
-        this.active = active;
-    }
-
-    public boolean isPreferred() {
-        return preferred;
-    }
-
-    public void setPreferred(boolean preferred) {
-        this.preferred = preferred;
-    }
-
-    public GearType getGearType() {
-        return gearType;
-    }
-
-    public void setGearType(GearType activityType) {
-        this.gearType = activityType;
-    }
-
-
-
     @Override
     public String toString() {
         return "Gear{" + "id=" + getId() + ", name=" + name + ", mileage=" + mileage + ", mileageOffset=" + mileageOffset + ", user=" + user
                 + ", active=" + active + ", gearType=" + gearType + ", preferred=" + preferred + '}';
     }
-
-
-
 }
