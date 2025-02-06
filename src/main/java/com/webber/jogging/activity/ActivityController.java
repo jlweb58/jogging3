@@ -3,18 +3,14 @@ package com.webber.jogging.activity;
 import com.webber.jogging.security.UserNotFoundException;
 import com.webber.jogging.user.User;
 import com.webber.jogging.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@Slf4j
 @RequestMapping("/jogging")
 public class ActivityController {
 
@@ -53,6 +49,18 @@ public class ActivityController {
         activity.setUser(user);
         Activity updated = activityService.save(activity);
         return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping(path="/activities/{activityId}", produces = "application/json")
+    public ResponseEntity<String> deleteActivity(@PathVariable Long activityId) throws UserNotFoundException {
+        User user = userService.getCurrentUser();
+        Activity existingActivity = activityService.find(activityId);
+        if (!existingActivity.getUser().getId().equals(user.getId())) {
+           log.error("User {} is not the owner of the activity", user.getUsername());
+           throw new IllegalArgumentException("User " + user.getUsername() + " is not the owner of the activity");
+        }
+        activityService.delete(existingActivity);
+        return ResponseEntity.ok("Activity deleted");
     }
 
 }
