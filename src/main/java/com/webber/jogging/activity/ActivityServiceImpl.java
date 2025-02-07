@@ -12,14 +12,12 @@ import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
-import org.springframework.transaction.TransactionManager;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.support.TransactionTemplate;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -110,7 +108,7 @@ public class ActivityServiceImpl implements ActivityService {
                         User.class)
                 .setParameter("username", "jwebber")
                 .getSingleResult();
-        ActivityDuration activityDuration = ActivityDuration.fromSeconds(activityDto.movingTime());
+        Duration activityDuration = Duration.ofSeconds(activityDto.movingTime());
         int heartRate = Math.toIntExact(Math.round(activityDto.averageHeartRate()));
         double distance = activityDto.distance() / 1000.0;
         ActivityType activityType = ActivityType.fromStravaTypeString(activityDto.type());

@@ -2,7 +2,6 @@ package com.webber.jogging.gear;
 
 import com.webber.jogging.Application;
 import com.webber.jogging.activity.Activity;
-import com.webber.jogging.activity.ActivityDuration;
 import com.webber.jogging.activity.ActivityService;
 import com.webber.jogging.activity.ActivityType;
 import com.webber.jogging.user.User;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
+import java.time.Duration;
 import java.util.Date;
 import java.util.List;
 
@@ -84,7 +84,7 @@ public class GearServiceImplIntTest {
     public void testGetShoesForUserMileage() {
         User user = userService.create(new User("test", "test", "test@test.com", true));
         Gear gear = new Gear("MyShoes1", 0, user);
-        ActivityDuration activityDuration = new ActivityDuration(0, 28, 33);
+        Duration activityDuration = Duration.ofHours(0).plusMinutes(28).plusSeconds(33);
         Activity activity = Activity.build(new Date(), "Mü2", 5.2, activityDuration, "15 pc", "Felt good", 140, user, ActivityType.RUN);
         activity.setGear(gear);
         activityService.create(activity);

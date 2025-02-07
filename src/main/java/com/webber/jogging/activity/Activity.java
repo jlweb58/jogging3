@@ -5,10 +5,12 @@ import com.webber.jogging.gear.Gear;
 import com.webber.jogging.user.User;
 import com.webber.jogging.user.UserResource;
 
+import com.webber.jogging.util.DurationConverter;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.Duration;
 import java.util.Date;
 
 @Getter
@@ -25,8 +27,9 @@ public class Activity implements UserResource {
     @Column(name = "course", nullable = false)
     private String course;
 
-    @Embedded
-    private ActivityDuration activityDuration = new ActivityDuration(0, 0, 0);
+    @Convert(converter = DurationConverter.class)
+    @Column(name = "duration")
+    private Duration duration;
 
     @Column(name = "distance")
     private double distance;
@@ -57,19 +60,19 @@ public class Activity implements UserResource {
     @Column(name = "activity_type")
     private ActivityType activityType;
 
-    Activity(Date date, String course, double distance, ActivityDuration activityDuration,
+    Activity(Date date, String course, double distance, Duration duration,
              String weather, String comments, Integer avgHeartRate, ActivityType activityType) {
         this.date = date;
         this.course = course;
         this.distance = distance;
-        this.activityDuration = activityDuration;
+        this.duration = duration;
         this.weather = weather;
         this.comments = comments;
         this.avgHeartRate = avgHeartRate;
         this.activityType = activityType;
     }
 
-    public static Activity build(Date date, String course, double distance, ActivityDuration activityDuration,
+    public static Activity build(Date date, String course, double distance, Duration activityDuration,
                                  String weather, String comments, Integer avgHeartRate, User user, ActivityType activityType) {
         Activity activity = new Activity(date, course, distance, activityDuration, weather, comments, avgHeartRate, activityType);
         activity.setUser(user);
@@ -87,7 +90,7 @@ public class Activity implements UserResource {
 
     @Override
     public String toString() {
-        return "Activity{" + "id=" + getId() + ", course=" + course + ", activityDuration=" + activityDuration + ", distance=" + distance + ", comments="
+        return "Activity{" + "id=" + getId() + ", course=" + course + ", duration=" + duration + ", distance=" + distance + ", comments="
                 + comments + ", weather=" + weather + ", date=" + date + ", avgHeartRate=" + avgHeartRate + ", gear=" + gear + ", user="
                 + user + ", activityType=" + activityType
                 + '}';
