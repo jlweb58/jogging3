@@ -4,7 +4,7 @@ Configuration:
   Properties:
     Property:
       name: log-path
-      value: "/jogging/logs"
+      value: "/var/log"
 
   Appenders:
     Console:
