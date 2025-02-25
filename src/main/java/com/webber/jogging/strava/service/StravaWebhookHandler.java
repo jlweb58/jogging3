@@ -22,7 +22,7 @@ public class StravaWebhookHandler {
 
     @Transactional( propagation = Propagation.REQUIRES_NEW)
     public void handleActivityCreated(StravaWebhookEvent stravaWebhookEvent) {
-        if ("activity".equals(stravaWebhookEvent.objectType())) {
+        if ("activity".equals(stravaWebhookEvent.objectType()) && "create".equals(stravaWebhookEvent.aspectType())) {
             stravaActivityService.getActivity(stravaWebhookEvent.objectId())
                     .subscribe(
                             activityService::processNewActivity,
