@@ -36,6 +36,5 @@ If the profile is omitted, default is prod
 * docker run -p9005:9005 --network mynetwork --rm -e SPRING_PROFILE=localhost jogging
 
 ## TODO
-* Update Spring Boot to 3.4. This will break the WebSecurityConfig, requiring considerable refactoring!
 
 
