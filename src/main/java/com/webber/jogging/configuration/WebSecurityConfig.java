@@ -1,17 +1,17 @@
 package com.webber.jogging.configuration;
 
 import com.webber.jogging.security.AuthTokenFilter;
-import com.webber.jogging.user.UserDetailsServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.core.env.Environment;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,8 +32,12 @@ import java.util.Collections;
         prePostEnabled = true)
 @Order(1)
 public class WebSecurityConfig  {
-    @Autowired
-    UserDetailsServiceImpl userDetailsService;
+
+    private final Environment environment;
+
+    public WebSecurityConfig(Environment environment) {
+        this.environment = environment;
+    }
 
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -48,6 +52,14 @@ public class WebSecurityConfig  {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
+        if (environment.matchesProfiles("localhost")) {
+            configuration.addAllowedOriginPattern("*");  // Allow any origin in development
+        } else {
+            configuration.setAllowedOrigins(Arrays.asList(
+                    "http://localhost:4200",
+                    "https://www.webber-jogging.de"
+            ));
+        }
         configuration.setAllowedOrigins(Arrays.asList("http://localhost:4200", "https://www.webber-jogging.de"));
         configuration.setAllowedMethods(Collections.singletonList("*"));
         configuration.setAllowedHeaders(Collections.singletonList("*"));
@@ -65,7 +77,7 @@ public class WebSecurityConfig  {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-        .csrf(csrf -> csrf.disable())
+        .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((authorize) -> authorize.requestMatchers("/jogging/login/**").permitAll()
                 .requestMatchers("/jogging/test/**").permitAll()

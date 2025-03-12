@@ -65,7 +65,7 @@ public class StravaActivityStreamJsonParsingService {
                             array.data(),
                             new TypeReference<List<Number>>() {}
                     );
-                    distanceData.forEach(d -> distances.add(d.doubleValue()));
+                    distanceData.forEach(d -> distances.add(Math.round(d.doubleValue() * 100.0) / 100.0));
                     break;
                 case "altitude":
                     List<Number> altitudeData = objectMapper.convertValue(
