@@ -110,11 +110,12 @@ public class ActivityServiceImpl implements ActivityService {
                 .getSingleResult();
         Duration activityDuration = Duration.ofSeconds(activityDto.movingTime());
         int heartRate = Math.toIntExact(Math.round(activityDto.averageHeartRate()));
-        double distance = activityDto.distance() / 1000.0;
+        double rawDistance = activityDto.distance() / 1000.0;
+        double roundedDistance = Math.round(rawDistance * 100.0) / 100.0;
         ActivityType activityType = ActivityType.fromStravaTypeString(activityDto.type());
         Date date = Date.from(LocalDateTime.parse(activityDto.startDateLocal(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")).toInstant(ZoneOffset.UTC));
         String course = activityDto.name();
-        Activity activity = Activity.build(date, course, distance, activityDuration, null, null, heartRate, user, activityType);
+        Activity activity = Activity.build(date, course, roundedDistance, activityDuration, null, null, heartRate, user, activityType);
         this.create(activity);
 
         if (activityDto.map() != null && !StringUtils.isEmpty(activityDto.map().polyline())) {
