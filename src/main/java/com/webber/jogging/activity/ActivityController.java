@@ -7,6 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -39,6 +40,10 @@ public class ActivityController {
     public ResponseEntity<Activity> createActivity(@RequestBody Activity activity) throws UserNotFoundException {
         User user = userService.getCurrentUser();
         activity.setUser(user);
+        // If the activity doesn't have a timestamp, set it to current time
+        if (activity.getDate() == null) {
+            activity.setDate(new Date());
+        }
         Activity created = activityService.create(activity);
         return ResponseEntity.ok(created);
     }
@@ -46,7 +51,23 @@ public class ActivityController {
     @PutMapping(path="/activities/{id}", produces = "application/json")
     public ResponseEntity<Activity> updateActivity(@RequestBody Activity activity, @PathVariable Long id) throws UserNotFoundException {
         User user = userService.getCurrentUser();
+        // Ensure we're working with the existing activity
+        Activity existingActivity = activityService.find(id);
+        if (existingActivity == null) {
+            return ResponseEntity.notFound().build();
+        }
+
+        // Check ownership
+        if (!existingActivity.getUser().getId().equals(user.getId())) {
+            log.error("User {} is attempting to update activity owned by {}",
+                    user.getUsername(), existingActivity.getUser().getUsername());
+            return ResponseEntity.status(403).build();
+        }
         activity.setUser(user);
+        // Ensure activity has a timestamp
+        if (activity.getDate() == null) {
+            activity.setDate(existingActivity.getDate());
+        }
         Activity updated = activityService.save(activity);
         return ResponseEntity.ok(updated);
     }

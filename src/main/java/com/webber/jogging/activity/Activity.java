@@ -41,7 +41,7 @@ public class Activity implements UserResource {
     private String weather;
 
     @Column(name = "activity_date", nullable = false)
-    @Temporal(TemporalType.DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
 
     @Column(name = "avg_heart_rate")

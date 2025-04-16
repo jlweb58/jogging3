@@ -10,11 +10,11 @@ import com.webber.jogging.strava.service.StravaActivityStreamJsonParsingService;
 import com.webber.jogging.user.User;
 import jakarta.persistence.EntityManager;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.support.TransactionTemplate;
+import org.springframework.util.StringUtils;
 import reactor.core.publisher.Mono;
 
 import java.time.Duration;
@@ -69,7 +69,7 @@ public class ActivityServiceImpl implements ActivityService {
 
     @Override
     public Activity save(Activity activity) {
-       return activityRepository.save(activity);
+        return activityRepository.save(activity);
     }
 
     @Override
@@ -113,12 +113,14 @@ public class ActivityServiceImpl implements ActivityService {
         double rawDistance = activityDto.distance() / 1000.0;
         double roundedDistance = Math.round(rawDistance * 100.0) / 100.0;
         ActivityType activityType = ActivityType.fromStravaTypeString(activityDto.type());
-        Date date = Date.from(LocalDateTime.parse(activityDto.startDateLocal(), DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")).toInstant(ZoneOffset.UTC));
+        // Parse the Strava timestamp into a proper Date with full time information
+        Date date = parseStravaTimestamp(activityDto.startDateLocal());
+        log.info("Found date from strava activity: {}", date);
         String course = activityDto.name();
         Activity activity = Activity.build(date, course, roundedDistance, activityDuration, null, null, heartRate, user, activityType);
         this.create(activity);
 
-        if (activityDto.map() != null && !StringUtils.isEmpty(activityDto.map().polyline())) {
+        if (activityDto.map() != null && !StringUtils.hasLength(activityDto.map().polyline())) {
             processActivityStream(activity.getId(), activityDto.id(), date.toInstant(), user)
                     .subscribe(
                             savedActivity -> log.info("Successfully processed stream for activity: {}", activity.getId()),
@@ -128,32 +130,51 @@ public class ActivityServiceImpl implements ActivityService {
 
     }
 
-
-    public Mono<ParsedGpxTrack> processActivityStream(Long activityId, Long stravaActivityId, Instant activityStartDate, User user) {
-            return stravaActivityService.getActivityStreams(stravaActivityId)
-                    .flatMap(streamArrays -> {
-                        ParsedGpxTrack parsedGpxTrack = stravaActivityStreamJsonParsingService.parseActivityDataStream(streamArrays, activityStartDate);
-                        return updateActivityWithGpxTrack(activityId, parsedGpxTrack, user);
-
-                    })
-                    .doOnError(error -> log.error("Failed to process activity stream for activity {}: {} ", activityId, error.getMessage()));
+    /**
+     * Parse Strava timestamp format (e.g. "2024-10-20T09:45:59Z") to a Java Date object
+     * that preserves the full timestamp information
+     */
+    private Date parseStravaTimestamp(String timestamp) {
+        try {
+            // Parse using DateTimeFormatter to handle ISO format
+            LocalDateTime dateTime = LocalDateTime.parse(
+                    timestamp,
+                    DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
+            );
+            // Convert to instant and then to Date
+            return Date.from(dateTime.toInstant(ZoneOffset.UTC));
+        } catch (Exception e) {
+            log.error("Error parsing Strava timestamp: {}", timestamp, e);
+            // Fall back to current time if parsing fails
+            return new Date();
+        }
     }
 
-    protected Mono<ParsedGpxTrack> updateActivityWithGpxTrack(Long activityId, ParsedGpxTrack parsedGpxTrack, User user)  {
-       return Mono.fromCallable(() ->
-       transactionTemplate.execute(status -> {
-           Activity activity = entityManager.find(Activity.class, activityId);
-           activity = entityManager.merge(activity);
-           String gpxTrackXmlString = gpxConverter.convertToGpx(parsedGpxTrack, activity.getCourse());
-           GpxTrack gpxTrack = new GpxTrack(gpxTrackXmlString, activity, user);
-           try {
-               return gpxTrackService.save(gpxTrack);
+    public Mono<ParsedGpxTrack> processActivityStream(Long activityId, Long stravaActivityId, Instant activityStartDate, User user) {
+        return stravaActivityService.getActivityStreams(stravaActivityId)
+                .flatMap(streamArrays -> {
+                    ParsedGpxTrack parsedGpxTrack = stravaActivityStreamJsonParsingService.parseActivityDataStream(streamArrays, activityStartDate);
+                    return updateActivityWithGpxTrack(activityId, parsedGpxTrack, user);
 
-           } catch (Exception e) {
-               throw new RuntimeException(e);
-           }
-       })
-       );
+                })
+                .doOnError(error -> log.error("Failed to process activity stream for activity {}: {} ", activityId, error.getMessage()));
+    }
+
+    protected Mono<ParsedGpxTrack> updateActivityWithGpxTrack(Long activityId, ParsedGpxTrack parsedGpxTrack, User user) {
+        return Mono.fromCallable(() ->
+                transactionTemplate.execute(status -> {
+                    Activity activity = entityManager.find(Activity.class, activityId);
+                    activity = entityManager.merge(activity);
+                    String gpxTrackXmlString = gpxConverter.convertToGpx(parsedGpxTrack, activity.getCourse());
+                    GpxTrack gpxTrack = new GpxTrack(gpxTrackXmlString, activity, user);
+                    try {
+                        return gpxTrackService.save(gpxTrack);
+
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+        );
     }
 
 }
