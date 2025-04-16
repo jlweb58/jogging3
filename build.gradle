@@ -100,21 +100,20 @@ def incrementVersion = { ->
         props['build'] = '0'
     }
 
-    // Increment build number
-    def build = props['build'] as int
-    props['build'] = (build + 1).toString()
+    // Only increment if INCREMENT_VERSION is set to true
+    if (System.getenv('INCREMENT_VERSION') == 'true') {
+        // Increment build number
+        def build = props['build'] as int
+        props['build'] = (build + 1).toString()
 
-    // Save updated properties
-    def writer = new FileWriter(versionFile)
-    props.store(writer, null)
+        // Save updated properties
+        def writer = new FileWriter(versionFile)
+        props.store(writer, null)
+    }
 
     return "${props.major}.${props.minor}.${props.patch}-${props.build}"
 }
 
-// Only increment version when running in CI environment
-if (System.getenv('CI')) {
-    version = incrementVersion()
-} else {
-    version = getVersionName()
-}
+// Always get the version, but only increment when explicitly told to
+version = incrementVersion()
 

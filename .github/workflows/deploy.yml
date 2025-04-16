@@ -36,8 +36,12 @@ jobs:
 
       - name: Get Version
         run: |
+          # First, just read the current version without incrementing
           VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
           echo "VERSION=$VERSION" >> $GITHUB_ENV
+
+          # Now set the flag to increment for the build
+          echo "INCREMENT_VERSION=true" >> $GITHUB_ENV
 
       - name: Build with Gradle
         run: | 
