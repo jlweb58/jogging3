@@ -6,6 +6,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.concurrent.CompletableFuture;
+
 @RestController
 @Slf4j
 @RequestMapping("/jogging/strava-api")
@@ -37,7 +39,15 @@ public class StravaActivityWebhookController {
     public ResponseEntity<Void> handleWebhookEvent(@RequestBody StravaWebhookEvent event) {
         log.info("Received webhook event. Type: {}, Object Type: {}, Object ID: {}, Owner ID: {}",
                 event.aspectType(), event.objectType(), event.objectId(), event.ownerId());
-        webhookHandler.handleActivityCreated(event);
+        CompletableFuture.runAsync(() -> {
+            try {
+                Thread.sleep(5000);
+                webhookHandler.handleActivityCreated(event);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                log.error("Interrupted while handling webhook event: {}", e.getMessage());
+            }
+        });
         return ResponseEntity.ok().build();
     }
 }

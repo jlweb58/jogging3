@@ -126,6 +126,8 @@ public class ActivityServiceImpl implements ActivityService {
                             savedActivity -> log.info("Successfully processed stream for activity: {}", activity.getId()),
                             error -> log.error("Error processing stream for activity: {}: {}", activity.getId(), error.getMessage())
                     );
+        } else {
+            log.error("Found no map info for activity: {} {}", activityDto.id(), activityDto.name());
         }
 
     }
