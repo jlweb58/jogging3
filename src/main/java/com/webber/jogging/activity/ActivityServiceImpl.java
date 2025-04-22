@@ -120,7 +120,7 @@ public class ActivityServiceImpl implements ActivityService {
         Activity activity = Activity.build(date, course, roundedDistance, activityDuration, null, null, heartRate, user, activityType);
         this.create(activity);
 
-        if (activityDto.map() != null && !StringUtils.hasLength(activityDto.map().polyline())) {
+        if (activityDto.map() != null && StringUtils.hasLength(activityDto.map().polyline())) {
             processActivityStream(activity.getId(), activityDto.id(), date.toInstant(), user)
                     .subscribe(
                             savedActivity -> log.info("Successfully processed stream for activity: {}", activity.getId()),
